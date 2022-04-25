@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const pool = require("./config/db-config");
 const postRoutes = require("./routes/posts");
+const userRoutes = require("./routes/users");
 
 app.use(express.json());
 
@@ -19,5 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/posts", postRoutes);
+
+app.use("/users", userRoutes);
 
 module.exports = app;
