@@ -59,10 +59,7 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
-   const token = req.headers.authorization.split(" ")[1];
-   const decodedToken = jwt.verify(token, "7781e9b987b943a1d7bec478a41b02f0");
-   const userId = decodedToken.userId;
-
+   const userId = req.auth.userId;
    pool
       .query("SELECT * FROM users WHERE user_id = $1", [userId])
       .then((data) => {
@@ -96,12 +93,10 @@ exports.modifyUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-   const token = req.headers.authorization.split(" ")[1];
-   const decodedToken = jwt.verify(token, "7781e9b987b943a1d7bec478a41b02f0");
-   const userId = decodedToken.userId;
+   const userId = req.auth.userId;
 
    pool
       .query("DELETE FROM users WHERE user_id = $1", [userId])
-      .then(() => res.status(200).json("Utilisateur supprimer"))
+      .then((user) => res.status(200).json("Utilisateur supprimer"))
       .catch((err) => res.status(500).json({ err }));
 };
