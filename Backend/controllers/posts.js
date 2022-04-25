@@ -32,24 +32,53 @@ exports.getOnePost = async (req, res, next) => {
 };
 
 exports.modifyPost = async (req, res, next) => {
-   try {
-      const { id } = req.params;
-      const data = req.body;
-      await pool.query("UPDATE posts SET content = $1 WHERE post_id = $2", [
-         data.content,
-         id,
-      ]);
+   const { id } = req.params;
+   const data = req.body;
 
-      res.status(200).json("Post mis à jour");
-   } catch (err) {
-      console.error(err.message);
-   }
+   await pool
+      .query("SELECT * FROM posts WHERE post_id = $1", [id])
+      .then((post) => {
+         if (!post) {
+            return res.status(404).json({
+               error: "Post non trouvé !",
+            });
+         }
+         if (post.rows[0].owner_id !== req.auth.userId) {
+            return res.status(401).json({
+               error: "Requête non autorisée !",
+            });
+         }
+         pool
+            .query("UPDATE posts set content = $1 WHERE post_id = $2", [
+               data.content,
+               id,
+            ])
+            .then(res.status(200).json("Post mis à jour"))
+            .catch((err) => console.error(err));
+      })
+      .catch((err) => console.log(err));
 };
 
 exports.deletePost = async (req, res, next) => {
    const { id } = req.params;
+
    await pool
-      .query("DELETE FROM posts WHERE post_id = $1", [id])
-      .then(() => res.status(200).json({ message: "Post Supprimé!" }))
-      .catch((err) => res.status(400).json({ err }));
+      .query("SELECT * FROM posts WHERE post_id = $1", [id])
+      .then((post) => {
+         if (!post) {
+            return res.status(404).json({
+               error: "Post non trouvé !",
+            });
+         }
+         if (post.rows[0].owner_id !== req.auth.userId) {
+            return res.status(401).json({
+               error: "Requête non autorisée !",
+            });
+         }
+         pool
+            .query("DELETE FROM posts WHERE post_id = $1", [id])
+            .then(() => res.status(200).json({ message: "Post Supprimé!" }))
+            .catch((err) => res.status(400).json({ err }));
+      })
+      .catch((err) => console.log(err));
 };

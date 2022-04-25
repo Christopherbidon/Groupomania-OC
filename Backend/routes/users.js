@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const userCtrl = require("../controllers/users");
 
-/* Route pour l'inscription */
-router.post("/signup", userCtrl.signup);
-/* Route pour la connection */
-router.post("/login", userCtrl.login);
-/* Route pour la modification */
-router.put("/modify", userCtrl.modify);
+/* Route pour inscrire un utilisateur */
+router.post("/signup", userCtrl.signupUser);
+/* Route pour connecter un utilisateur */
+router.post("/login", userCtrl.loginUser);
+/* Route pour modifier un utilisateur */
+router.put("/modify", userCtrl.modifyUser);
+/* Route pour supprimer un utilisateur */
+router.delete("/delete", userCtrl.deleteUser);
 
 module.exports = router;

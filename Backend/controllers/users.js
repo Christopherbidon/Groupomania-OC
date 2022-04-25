@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const pool = require("../config/db-config");
 
 /* Controleur pour l'inscription d'une personne */
-exports.signup = (req, res, next) => {
+exports.signupUser = (req, res, next) => {
    bcrypt
       .hash(req.body.password, 10)
       .then((hash) => {
@@ -26,7 +26,7 @@ exports.signup = (req, res, next) => {
 };
 
 /* Controlleur pour la connexion d'une personne */
-exports.login = (req, res, next) => {
+exports.loginUser = (req, res, next) => {
    const { email } = req.body;
    pool
       .query("SELECT * FROM users WHERE email = $1", [email])
@@ -58,7 +58,7 @@ exports.login = (req, res, next) => {
       .catch((err) => res.status(500).json({ err }));
 };
 
-exports.modify = (req, res, next) => {
+exports.modifyUser = (req, res, next) => {
    const token = req.headers.authorization.split(" ")[1];
    const decodedToken = jwt.verify(token, "7781e9b987b943a1d7bec478a41b02f0");
    const userId = decodedToken.userId;
@@ -92,5 +92,16 @@ exports.modify = (req, res, next) => {
             })
             .catch((err) => res.status(500).json({ err }));
       })
+      .catch((err) => res.status(500).json({ err }));
+};
+
+exports.deleteUser = (req, res, next) => {
+   const token = req.headers.authorization.split(" ")[1];
+   const decodedToken = jwt.verify(token, "7781e9b987b943a1d7bec478a41b02f0");
+   const userId = decodedToken.userId;
+
+   pool
+      .query("DELETE FROM users WHERE user_id = $1", [userId])
+      .then(() => res.status(200).json("Utilisateur supprimer"))
       .catch((err) => res.status(500).json({ err }));
 };
