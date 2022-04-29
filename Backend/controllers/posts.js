@@ -25,6 +25,7 @@ exports.getAllPosts = async (req, res, next) => {
 
 exports.getOnePost = async (req, res, next) => {
    const { id } = req.params;
+   console.log(req.auth);
    await pool
       .query("SELECT * FROM posts WHERE post_id = $1", [id])
       .then((post) => res.status(200).json(post.rows))
@@ -32,18 +33,21 @@ exports.getOnePost = async (req, res, next) => {
 };
 
 exports.modifyPost = async (req, res, next) => {
-   const { id } = req.params;
+   const postId = req.params.id;
    const data = req.body;
-
    await pool
-      .query("SELECT * FROM posts WHERE post_id = $1", [id])
+      .query("SELECT * FROM posts WHERE post_id = $1", [postId])
       .then((post) => {
          if (!post) {
             return res.status(404).json({
                error: "Post non trouvé !",
             });
          }
-         if (post.rows[0].owner_id !== req.auth.userId) {
+         console.log(req.auth.userAdmin);
+         if (
+            post.rows[0].owner_id !== req.auth.userId &&
+            req.auth.userAdmin !== true
+         ) {
             return res.status(401).json({
                error: "Requête non autorisée !",
             });
@@ -51,7 +55,7 @@ exports.modifyPost = async (req, res, next) => {
          pool
             .query("UPDATE posts set content = $1 WHERE post_id = $2", [
                data.content,
-               id,
+               postId,
             ])
             .then(res.status(200).json("Post mis à jour"))
             .catch((err) => console.error(err));
@@ -70,14 +74,17 @@ exports.deletePost = async (req, res, next) => {
                error: "Post non trouvé !",
             });
          }
-         if (post.rows[0].owner_id !== req.auth.userId) {
+         if (
+            post.rows[0].owner_id !== req.auth.userId &&
+            req.auth.userAdmin !== true
+         ) {
             return res.status(401).json({
                error: "Requête non autorisée !",
             });
          }
          pool
             .query("DELETE FROM posts WHERE post_id = $1", [id])
-            .then(() => res.status(200).json({ message: "Post Supprimé!" }))
+            .then(() => res.status(200).json("Post Supprimé!"))
             .catch((err) => res.status(400).json({ err }));
       })
       .catch((err) => console.log(err));
