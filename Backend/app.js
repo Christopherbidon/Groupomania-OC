@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const postRoutes = require("./routes/posts");
 const userRoutes = require("./routes/users");
+const likeRoutes = require("./routes/likes");
 
 app.use(express.json());
 
@@ -21,5 +22,7 @@ app.use((req, res, next) => {
 app.use("/posts", postRoutes);
 
 app.use("/users", userRoutes);
+
+app.use("/likes", likeRoutes);
 
 module.exports = app;
