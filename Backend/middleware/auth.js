@@ -12,6 +12,7 @@ module.exports = (req, res, next) => {
          "7781e9b987b943a1d7bec478a41b02f0"
       );
       const userId = decodedToken.userId;
+      console.log(decodedToken);
       req.auth = { userId };
       if (req.body.userId && req.body.userId !== userId) {
          throw "User ID non valable";

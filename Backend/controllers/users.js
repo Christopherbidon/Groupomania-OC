@@ -7,7 +7,7 @@ exports.signupUser = (req, res, next) => {
    bcrypt
       .hash(req.body.password, 10)
       .then((hash) => {
-         userInfo = req.body;
+         const userInfo = req.body;
          pool
             .query(
                "INSERT INTO users (email, password, name, firstname, civilite) VALUES ($1, $2, $3, $4, $5)",
@@ -46,8 +46,9 @@ exports.loginUser = (req, res, next) => {
                }
                res.status(200).json({
                   userId: user.user_id,
+                  admin: user.admin,
                   token: jwt.sign(
-                     { userId: user.user_id },
+                     { userId: user.user_id, admin: user.admin },
                      "7781e9b987b943a1d7bec478a41b02f0",
                      { expiresIn: "24h" }
                   ),
@@ -64,7 +65,6 @@ exports.modifyUser = (req, res, next) => {
       .query("SELECT * FROM users WHERE user_id = $1", [userId])
       .then((data) => {
          const user = data.rows[0];
-
          bcrypt
             .compare(req.body.password, user.password)
             .then((valid) => {
@@ -73,7 +73,6 @@ exports.modifyUser = (req, res, next) => {
                      .status(401)
                      .json({ error: "Ancien mot de passe incorecte !" });
                }
-
                bcrypt
                   .hash(req.body.newPassword, 10)
                   .then((hash) => {
@@ -94,9 +93,8 @@ exports.modifyUser = (req, res, next) => {
 
 exports.deleteUser = (req, res, next) => {
    const userId = req.auth.userId;
-
    pool
       .query("DELETE FROM users WHERE user_id = $1", [userId])
-      .then((user) => res.status(200).json("Utilisateur supprimer"))
+      .then(() => res.status(200).json("Utilisateur supprimer"))
       .catch((err) => res.status(500).json({ err }));
 };
