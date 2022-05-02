@@ -6,6 +6,6 @@ const auth = require("../middleware/auth");
 /* Route pour inscrire un utilisateur */
 router.post("/:idPost/like", auth, likeCtrl.addLike);
 /* Route pour supprimer un utilisateur */
-//router.post("/:idPost/dislike", auth, likeCtrl.addDislike);
+router.post("/:idPost/dislike", auth, likeCtrl.addDislike);
 
 module.exports = router;

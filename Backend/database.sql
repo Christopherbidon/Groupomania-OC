@@ -25,3 +25,12 @@
 	);
 	
 	SET DateStyle=dmy, iso;
+
+   -- Création de la table likes
+	
+	CREATE TABLE likes (
+		like_id SERIAL PRIMARY KEY,
+		owner_id uuid REFERENCES users (user_id),
+		post_id uuid REFERENCES posts (post_id),
+		like_value BOOLEAN NOT NULL
+	);
