@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 /* vérification que l'utilisateur est bien connecter */
 module.exports = (req, res, next) => {
@@ -7,14 +8,10 @@ module.exports = (req, res, next) => {
          return res.status(401).json({ error: "Merci de vous identifier" });
       }
       const token = req.headers.authorization.split(" ")[1];
-      const decodedToken = jwt.verify(
-         token,
-         "7781e9b987b943a1d7bec478a41b02f0"
-      );
+      const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
       const userId = decodedToken.userId;
       const userAdmin = decodedToken.admin;
       req.auth = { userId: userId, userAdmin: userAdmin };
-      console.log("Passage par l'authorization");
       next();
    } catch (err) {
       res.status(401).json(`Requête non authentifié (${err}) `);

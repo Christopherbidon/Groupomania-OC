@@ -1,0 +1,17 @@
+
+/*
+/!\ Vous devez remplacer les éléments du fichier par vos éléments et configurations. 
+A la fin de chaque ligne ce fichier ne doit PAS contenir de ";". /!\
+
+/!\Penser à enlever les " qui ne sont la que pour vous indiquez votre zone à remplir/!\
+*/
+
+// Configuration de la base de donnée Postgresql
+DB_CONFIG_USER = "user"
+DB_CONFIG_PASSWORD = "password"
+DB_CONFIG_HOST = "host exemple(localhost)"
+DB_CONFIG_PORT = "port exemple(5432)"
+DB_CONFIG_DATABASE = "name of your database"
+
+// Clé de sécurité privé Json Web Token
+JWT_PRIVATE_KEY = "clé privé"

@@ -25,7 +25,6 @@ exports.getAllPosts = async (req, res, next) => {
 
 exports.getOnePost = async (req, res, next) => {
    const { id } = req.params;
-   console.log(req.auth);
    await pool
       .query("SELECT * FROM posts WHERE post_id = $1", [id])
       .then((post) => res.status(200).json(post.rows))

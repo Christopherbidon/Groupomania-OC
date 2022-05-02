@@ -32,7 +32,6 @@ exports.loginUser = (req, res, next) => {
       .query("SELECT * FROM users WHERE email = $1", [email])
       .then((data) => {
          const user = data.rows[0];
-         console.log(user);
          if (!user) {
             return res.status(401).json({ error: "Utilisateur non trouvé !" });
          }
@@ -49,7 +48,7 @@ exports.loginUser = (req, res, next) => {
                   admin: user.admin,
                   token: jwt.sign(
                      { userId: user.user_id, admin: user.admin },
-                     "7781e9b987b943a1d7bec478a41b02f0",
+                     process.env.JWT_PRIVATE_KEY,
                      { expiresIn: "24h" }
                   ),
                });
