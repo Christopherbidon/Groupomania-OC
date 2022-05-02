@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const postRoutes = require("./routes/posts");
 const userRoutes = require("./routes/users");
 const likeRoutes = require("./routes/likes");
@@ -18,6 +19,9 @@ app.use((req, res, next) => {
    );
    next();
 });
+
+console.log(path.join(__dirname, "medias"));
+console.log(path.join(__dirname, "images"));
 
 app.use("/posts", postRoutes);
 

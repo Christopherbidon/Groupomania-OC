@@ -1,13 +1,18 @@
 const pool = require("../config/db-config");
+const fs = require("fs");
 
 exports.createPost = async (req, res, next) => {
    try {
-      console.log(req.body);
-      const data = req.body;
+      const ownerId = req.auth.userId;
+      const content = req.body.content;
+      const date = new Date(Date.now()).toLocaleDateString();
+      const imageUrl = req.file
+         ? `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`
+         : null;
 
       await pool.query(
-         "INSERT INTO posts (owner_id, content, date) VALUES ($1, $2, $3)",
-         [data.owner_id, data.content, data.date]
+         "INSERT INTO posts (owner_id, content, date, image_url) VALUES ($1, $2, $3, $4)",
+         [ownerId, content, date, imageUrl]
       );
 
       res.status(201).json();
@@ -33,11 +38,16 @@ exports.getOnePost = async (req, res, next) => {
 
 exports.modifyPost = async (req, res, next) => {
    const postId = req.params.id;
-   const data = req.body;
+   const content = req.body.content;
+   const imageUrl = req.file
+      ? `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`
+      : req.body.imageUrl;
+
    await pool
       .query("SELECT * FROM posts WHERE post_id = $1", [postId])
       .then((post) => {
-         if (!post) {
+         console.log(post.rows[0]);
+         if (!post.rows[0]) {
             return res.status(404).json({
                error: "Post non trouvé !",
             });
@@ -52,10 +62,10 @@ exports.modifyPost = async (req, res, next) => {
             });
          }
          pool
-            .query("UPDATE posts set content = $1 WHERE post_id = $2", [
-               data.content,
-               postId,
-            ])
+            .query(
+               "UPDATE posts set content = $1, image_url = $2 WHERE post_id = $3",
+               [content, imageUrl, postId]
+            )
             .then(res.status(200).json("Post mis à jour"))
             .catch((err) => console.error(err));
       })
@@ -79,6 +89,13 @@ exports.deletePost = async (req, res, next) => {
          ) {
             return res.status(401).json({
                error: "Requête non autorisée !",
+            });
+         }
+         const imageUrl = post.rows[0].image_url;
+
+         if (imageUrl !== null) {
+            fs.unlink(`medias/${imageUrl.split("/medias/")[1]}`, (err) => {
+               console.log(err);
             });
          }
          pool
