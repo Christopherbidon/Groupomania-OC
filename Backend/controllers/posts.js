@@ -78,30 +78,33 @@ exports.deletePost = async (req, res, next) => {
    await pool
       .query("SELECT * FROM posts WHERE post_id = $1", [id])
       .then((post) => {
-         if (!post) {
-            return res.status(404).json({
-               error: "Post non trouvé !",
-            });
-         }
-         if (
-            post.rows[0].owner_id !== req.auth.userId &&
-            req.auth.userAdmin !== true
-         ) {
-            return res.status(401).json({
-               error: "Requête non autorisée !",
-            });
-         }
-         const imageUrl = post.rows[0].image_url;
+         try {
+            const imageUrl = post.rows[0].image_url;
 
-         if (imageUrl !== null) {
-            fs.unlink(`medias/${imageUrl.split("/medias/")[1]}`, (err) => {
-               console.log(err);
-            });
+            if (!post) {
+               return res.status(404).json({
+                  error: "Post non trouvé !",
+               });
+            }
+            if (
+               post.rows[0].owner_id !== req.auth.userId &&
+               req.auth.userAdmin !== true
+            ) {
+               return res.status(401).json({
+                  error: "Requête non autorisée !",
+               });
+            }
+            if (imageUrl !== null) {
+               fs.unlink(`medias/${imageUrl.split("/medias/")[1]}`, (err) => {
+                  if (err) console.log(err);
+               });
+            }
+            pool.query("DELETE FROM likes WHERE post_id = $1", [id]);
+            pool.query("DELETE FROM posts WHERE post_id = $1", [id]);
+            return res.status(200).json("Post et like supprimé");
+         } catch (err) {
+            return res.status(400).json(err);
          }
-         pool
-            .query("DELETE FROM posts WHERE post_id = $1", [id])
-            .then(() => res.status(200).json("Post Supprimé!"))
-            .catch((err) => res.status(400).json({ err }));
       })
       .catch((err) => console.log(err));
 };
