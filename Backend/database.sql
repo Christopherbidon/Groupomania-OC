@@ -20,8 +20,11 @@
 	CREATE TABLE posts (
 	post_id uuid DEFAULT uuid_generate_v4 () PRIMARY KEY,
 	owner_id uuid REFERENCES users (user_id),
+   likes INT,
+   dislikes INT,
 	content TEXT,
-	date DATE
+	date DATE,
+   image_url VARCHAR(255)
 	);
 	
 	SET DateStyle=dmy, iso;
