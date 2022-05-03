@@ -20,8 +20,9 @@ app.use((req, res, next) => {
    next();
 });
 
+app.use("/medias", express.static(path.join(__dirname, "medias")));
+
 console.log(path.join(__dirname, "medias"));
-console.log(path.join(__dirname, "images"));
 
 app.use("/posts", postRoutes);
 
