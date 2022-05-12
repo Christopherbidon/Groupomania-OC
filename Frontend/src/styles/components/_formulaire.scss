@@ -1,0 +1,86 @@
+.containerForm {
+   width: 100%;
+   height: auto;
+   padding-top: 50px;
+   &__containerButton {
+      margin-bottom: 20px;
+      button {
+         width: 50%;
+         height: 50px;
+         border-style: none;
+         font-size: 20px;
+         &:hover {
+            cursor: pointer;
+            background-color: $secondaryColor;
+         }
+      }
+      .buttonActive {
+         background-color: $secondaryColor;
+      }
+   }
+}
+
+.form {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   form {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      input {
+         height: 50px;
+         width: 100%;
+         padding: 0 20px 0 20px;
+         margin-bottom: 20px;
+         font-size: 20px;
+         &[type="submit"] {
+            background-color: $secondaryColor;
+            border-style: none;
+            border-color: darken($secondaryColor, $amount: 20%);
+            color: $primaryColor;
+            &:hover {
+               cursor: pointer;
+               background-color: darken($secondaryColor, $amount: 20%);
+            }
+         }
+      }
+   }
+   &__signup {
+      form {
+         display: grid;
+         grid-template-areas:
+            "a b"
+            "c c"
+            "d e";
+         grid-template-columns: 1fr 1fr;
+         gap: 20px;
+         input {
+            margin-bottom: 0;
+            &:nth-child(1) {
+               grid-area: a;
+            }
+            &:nth-child(2) {
+               grid-area: b;
+            }
+            &:nth-child(3) {
+               grid-area: c;
+            }
+            &:nth-child(4) {
+               grid-area: d;
+            }
+            &:nth-child(5) {
+               grid-area: e;
+            }
+         }
+      }
+   }
+}
+
+.message_error {
+   color: rgb(137, 0, 0);
+   font-weight: bold;
+}

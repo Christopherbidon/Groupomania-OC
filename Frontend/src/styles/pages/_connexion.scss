@@ -1,0 +1,28 @@
+.containerConnexion {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   gap: 30px;
+   padding: 30px;
+   width: 100%;
+   height: 100vh;
+   &__logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      overflow: hidden;
+      width: 60%;
+      min-width: 400px;
+      padding: 10% 0 10% 0;
+      img {
+         width: 100%;
+      }
+   }
+   &__form {
+      display: flex;
+      justify-content: center;
+      max-width: 500px;
+      width: 100%;
+   }
+}

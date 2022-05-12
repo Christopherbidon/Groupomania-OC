@@ -27,7 +27,6 @@ exports.addLike = async (req, res, next) => {
                      "UPDATE posts set likes = likes + 1 WHERE post_id = $1",
                      [postId]
                   );
-
                   return res.status(200).json({ message: "Like mis à jour" });
                } catch (err) {
                   return res.status(400).json(err.message);

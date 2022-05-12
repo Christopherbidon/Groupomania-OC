@@ -22,8 +22,6 @@ app.use((req, res, next) => {
 
 app.use("/medias", express.static(path.join(__dirname, "medias")));
 
-console.log(path.join(__dirname, "medias"));
-
 app.use("/posts", postRoutes);
 
 app.use("/users", userRoutes);

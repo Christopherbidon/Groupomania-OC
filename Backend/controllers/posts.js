@@ -9,12 +9,10 @@ exports.createPost = async (req, res, next) => {
       const imageUrl = req.file
          ? `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`
          : null;
-
       await pool.query(
          "INSERT INTO posts (owner_id, content, date, image_url) VALUES ($1, $2, $3, $4)",
          [ownerId, content, date, imageUrl]
       );
-
       res.status(201).json();
    } catch (err) {
       console.log(err.message);
