@@ -8,6 +8,7 @@
    height: 50px;
    padding: 10px;
    border-radius: 2px;
+   animation: 5s popupTransition;
    &__iconContainer {
       height: 30px;
       width: 30px;
@@ -17,5 +18,25 @@
       justify-content: center;
       background: $popupColorValidator;
       color: white;
+   }
+}
+
+@keyframes popupTransition {
+   0% {
+      top: -50px;
+      opacity: 0;
+   }
+   25% {
+      top: 30px;
+      opacity: 1;
+   }
+   75% {
+      top: 30px;
+      right: 30px;
+      opacity: 1;
+   }
+   100% {
+      opacity: 0;
+      right: -400px;
    }
 }
