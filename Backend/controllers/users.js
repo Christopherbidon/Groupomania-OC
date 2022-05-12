@@ -10,14 +10,8 @@ exports.signupUser = (req, res, next) => {
          const userInfo = req.body;
          pool
             .query(
-               "INSERT INTO users (email, password, name, firstname, civilite) VALUES ($1, $2, $3, $4, $5)",
-               [
-                  userInfo.email,
-                  hash,
-                  userInfo.name,
-                  userInfo.firstname,
-                  userInfo.civilite,
-               ]
+               "INSERT INTO users (email, password, name, firstname) VALUES ($1, $2, $3, $4)",
+               [userInfo.email, hash, userInfo.name, userInfo.firstname]
             )
             .then(() => res.status(201).json({ message: "Utilisateur créé" }))
             .catch((err) => res.status(400).json({ err }));
@@ -33,7 +27,9 @@ exports.loginUser = (req, res, next) => {
       .then((data) => {
          const user = data.rows[0];
          if (!user) {
-            return res.status(401).json({ error: "Utilisateur non trouvé !" });
+            return res
+               .status(401)
+               .json({ error: "Adresse e-mail incorrect !" });
          }
          bcrypt
             .compare(req.body.password, user.password)
@@ -41,7 +37,7 @@ exports.loginUser = (req, res, next) => {
                if (!valid) {
                   return res
                      .status(401)
-                     .json({ error: "Mot de passe incorecte !" });
+                     .json({ error: "Mot de passe incorrect !" });
                }
                res.status(200).json({
                   userId: user.user_id,
@@ -94,6 +90,6 @@ exports.deleteUser = (req, res, next) => {
    const userId = req.auth.userId;
    pool
       .query("DELETE FROM users WHERE user_id = $1", [userId])
-      .then(() => res.status(200).json("Utilisateur supprimer"))
+      .then(() => res.status(200).json("Utilisateur supprimer !"))
       .catch((err) => res.status(500).json({ err }));
 };

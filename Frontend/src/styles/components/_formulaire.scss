@@ -1,7 +1,6 @@
 .containerForm {
    width: 100%;
    height: auto;
-   padding-top: 50px;
    &__containerButton {
       margin-bottom: 20px;
       button {
@@ -83,4 +82,5 @@
 .message_error {
    color: rgb(137, 0, 0);
    font-weight: bold;
+   margin-bottom: 20px;
 }

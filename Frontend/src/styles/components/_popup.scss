@@ -1,0 +1,21 @@
+.popup {
+   position: absolute;
+   align-items: center;
+   gap: 10px;
+   top: 30px;
+   right: 30px;
+   background: white;
+   height: 50px;
+   padding: 10px;
+   border-radius: 2px;
+   &__iconContainer {
+      height: 30px;
+      width: 30px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $popupColorValidator;
+      color: white;
+   }
+}

@@ -1,15 +1,16 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const API_URL = "http://localhost:4000/users/";
 const SignUp = () => {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [secondPassword, setSecondPassword] = useState("");
-   const [civilite, setCivilite] = useState("");
    const [name, setName] = useState("");
    const [firstname, setFirstname] = useState("");
    const [messageError, setMessageError] = useState("");
+   const [popupValidate, setPopupValidate] = useState(false);
 
    const handleSignup = (e) => {
       e.preventDefault();
@@ -20,9 +21,11 @@ const SignUp = () => {
                password,
                name,
                firstname,
-               civilite,
             })
-            .then((res) => console.log(res))
+            .then((res) => {
+               console.log(res);
+               setPopupValidate(true);
+            })
             .catch((err) => {
                const codeError = err.response.data.err.code;
                console.log(codeError);
@@ -38,6 +41,17 @@ const SignUp = () => {
 
    return (
       <div className="form form__signup">
+         <div
+            className="popup"
+            style={popupValidate ? { display: "flex" } : { display: "none" }}
+         >
+            <div className="popup__iconContainer">
+               {<FontAwesomeIcon icon="fa-solid fa-check" />}
+            </div>
+            <div className="popup__textContainer">
+               <p className="popup__text">Utilisateur créer avec succès !</p>
+            </div>
+         </div>
          <form onSubmit={(e) => handleSignup(e)}>
             <input
                onChange={(e) => setName(e.target.value)}

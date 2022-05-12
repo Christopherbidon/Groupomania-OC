@@ -33,7 +33,7 @@ const Login = () => {
             <input
                onChange={(e) => setEmail(e.target.value)}
                type="email"
-               placeholder="email"
+               placeholder="Email"
                required
             />
             <input
