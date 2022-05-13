@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Popup from "./Popup";
 
 const API_URL = "http://localhost:4000/users/";
 const SignUp = () => {
@@ -9,8 +9,17 @@ const SignUp = () => {
    const [secondPassword, setSecondPassword] = useState("");
    const [name, setName] = useState("");
    const [firstname, setFirstname] = useState("");
-   const [messageError, setMessageError] = useState("");
-   const [popupValidate, setPopupValidate] = useState(false);
+   const [messagePopup, setMessagePopup] = useState("");
+   const [valuePopup, setValuePopup] = useState("");
+   const [popup, setPopup] = useState(false);
+
+   const popupTimeOut = () => {
+      setPopup(true);
+      const popupTime = setInterval(() => {
+         setPopup(false);
+         clearInterval(popupTime);
+      }, 6000);
+   };
 
    const handleSignup = (e) => {
       e.preventDefault();
@@ -24,34 +33,30 @@ const SignUp = () => {
             })
             .then((res) => {
                console.log(res);
-               setPopupValidate(true);
+               setMessagePopup("Utilisateur créer avec succès !");
+               setValuePopup("valid");
+               popupTimeOut();
             })
             .catch((err) => {
                const codeError = err.response.data.err.code;
                console.log(codeError);
                if (codeError == 23505) {
-                  setMessageError("Cette adresse e-mail est deja utilisée");
+                  setMessagePopup("Cette adresse e-mail est deja utilisée");
+                  setValuePopup("error");
+                  popupTimeOut();
                   console.log("ok");
                }
             });
       } else {
-         setMessageError("Les mots de passes ne sont pas identique");
+         setMessagePopup("Les mots de passes ne sont pas identique");
+         setValuePopup("error");
+         popupTimeOut();
       }
    };
 
    return (
       <div className="form form__signup">
-         <div
-            className="popup"
-            style={popupValidate ? { display: "flex" } : { display: "none" }}
-         >
-            <div className="popup__iconContainer">
-               {<FontAwesomeIcon icon="fa-solid fa-check" />}
-            </div>
-            <div className="popup__textContainer">
-               <p className="popup__text">Utilisateur créer avec succès !</p>
-            </div>
-         </div>
+         {popup ? <Popup value={valuePopup} popupText={messagePopup} /> : null}
          <form onSubmit={(e) => handleSignup(e)}>
             <input
                onChange={(e) => setName(e.target.value)}
@@ -78,10 +83,10 @@ const SignUp = () => {
             <input
                onChange={(e) => setSecondPassword(e.target.value)}
                type="password"
-               placeholder="Retaper votre Mot de passe"
+               placeholder="Retapez votre mot de passe"
                required
             />
-            <p className="message_error">{messageError}</p>
+            <p className="message_error"></p>
             <input type="submit" value="S'inscrire" />
          </form>
       </div>

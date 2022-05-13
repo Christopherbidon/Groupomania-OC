@@ -1,9 +1,11 @@
 .popup {
    position: absolute;
    align-items: center;
+   display: flex;
    gap: 10px;
    top: 30px;
    right: 30px;
+   opacity: 0;
    background: white;
    height: 50px;
    padding: 10px;
@@ -16,8 +18,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: $popupColorValidator;
       color: white;
+   }
+   &__error {
+      .popup__iconContainer {
+         background-color: red;
+      }
+   }
+   &__valid {
+      .popup__iconContainer {
+         background-color: $popupColorValidator;
+      }
    }
 }
 
