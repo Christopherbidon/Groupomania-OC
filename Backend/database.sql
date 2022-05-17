@@ -23,7 +23,7 @@
    likes INT,
    dislikes INT,
 	content TEXT,
-	date DATE,
+	date bigint,
    image_url VARCHAR(255)
 	);
 	
