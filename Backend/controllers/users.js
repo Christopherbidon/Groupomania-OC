@@ -2,6 +2,20 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db-config");
 
+/* Controleur pour récupérer un utilisateur */
+exports.getUser = (req, res, next) => {
+   const { id } = req.params;
+   pool
+      .query("SELECT * FROM users WHERE user_id = $1", [id])
+      .then((data) => {
+         const exportsData = {
+            name: data.rows[0].name,
+            firstname: data.rows[0].firstname,
+         };
+         res.status(200).json(exportsData);
+      })
+      .catch((err) => res.status(400).json({ err }));
+};
 /* Controleur pour l'inscription d'une personne */
 exports.signupUser = (req, res, next) => {
    bcrypt

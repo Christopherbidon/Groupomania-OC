@@ -12,7 +12,7 @@ const InputPost = () => {
    const [textImage, setTextImage] = useState(
       "Veuillez selectionner une image"
    );
-   const [content, setContent] = useState();
+   const [content, setContent] = useState("");
    const [user, setUser] = useState(null);
    useEffect(() => {
       setUser(JSON.parse(sessionStorage.getItem("user")));
@@ -64,6 +64,8 @@ const InputPost = () => {
          })
          .then((res) => {
             if (res.status == 201) {
+               handleResetImage();
+               setContent("");
                setMessagePopup("Post créer avec succès !");
                setValuePopup("valid");
                popupTimeOut();
@@ -89,6 +91,7 @@ const InputPost = () => {
             <textarea
                className="containerInputPost__text"
                placeholder="Tapez votre message ici !"
+               value={content}
                onChange={(e) => setContent(e.target.value)}
             ></textarea>
             <div className="preview">

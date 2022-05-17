@@ -3,6 +3,8 @@ const router = express.Router();
 const userCtrl = require("../controllers/users");
 const auth = require("../middleware/auth");
 
+/* Route pour récupérer un utilisateur */
+router.get("/:id", auth, userCtrl.getUser);
 /* Route pour inscrire un utilisateur */
 router.post("/signup", userCtrl.signupUser);
 /* Route pour connecter un utilisateur */

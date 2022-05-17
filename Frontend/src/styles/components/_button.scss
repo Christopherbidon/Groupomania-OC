@@ -16,3 +16,18 @@ input[type="submit"] {
       background-color: darken($secondaryColor, $amount: 20%);
    }
 }
+
+.buttonPost {
+   padding: 5px 10px;
+   border: none;
+   border-radius: 2px;
+   &__update {
+      background-color: #fbb93e;
+   }
+   &__cancel {
+      background-color: #fa5454;
+   }
+   &__delete {
+      background-color: #fa5454;
+   }
+}

@@ -14,6 +14,7 @@ const AllPosts = ({ user }) => {
          })
          .then((res) => {
             setPostsData(res.data);
+            console.log(res.data);
          })
          .catch((err) => console.log(err));
    }, []);
@@ -24,10 +25,10 @@ const AllPosts = ({ user }) => {
    };
 
    return (
-      <div>
+      <div className="postContainer">
          <ul>
             {postsData.map((post, index) => (
-               <Post key={index} post={post} />
+               <Post key={index} post={post} user={user} />
             ))}
          </ul>
          <input
