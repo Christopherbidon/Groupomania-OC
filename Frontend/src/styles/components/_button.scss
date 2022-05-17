@@ -1,0 +1,18 @@
+input[type="submit"] {
+   position: relative;
+   z-index: 10;
+   font-size: 18px;
+   background-color: $secondaryColor;
+   border-style: none;
+   border-color: darken($secondaryColor, $amount: 20%);
+   color: $primaryColor;
+   box-shadow: 1px 0px 15px 5px rgba(0, 0, 0, 0.2);
+   padding: 5px 20px;
+   border-radius: 2px;
+   &:hover {
+      box-shadow: 1px 0px 15px 10px rgba(0, 0, 0, 0.2);
+      scale: 1.01;
+      cursor: pointer;
+      background-color: darken($secondaryColor, $amount: 20%);
+   }
+}

@@ -5,7 +5,7 @@ exports.createPost = async (req, res, next) => {
    try {
       const ownerId = req.auth.userId;
       const content = req.body.content;
-      const date = new Date(Date.now()).toLocaleDateString();
+      const date = Date.now();
       const imageUrl = req.file
          ? `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`
          : null;
