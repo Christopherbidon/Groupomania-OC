@@ -9,7 +9,7 @@ body {
   background-color: #666e66;
 }
 
-main {
+.main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -20,7 +20,6 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-left: auto;
 }
 
 .containerConnexion {
@@ -409,6 +408,7 @@ input[type="submit"]:hover {
   padding: 5px 10px;
   border: none;
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .buttonPost__update {
@@ -446,14 +446,21 @@ input[type="submit"]:hover {
   background-color: #888888;
 }
 
+.post__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .post .postOwner {
   margin: 30px 30px 0 30px;
+  width: 50%;
   color: #4a4a4a;
 }
 
 .post li {
   width: 100%;
-  padding: 30px 30px 15px 30px;
+  padding: 15px 30px 30px 30px;
   list-style: none;
 }
 
@@ -473,6 +480,7 @@ input[type="submit"]:hover {
       -ms-flex-pack: end;
           justify-content: flex-end;
   gap: 10px;
-  margin: 0 30px 30px 30px;
+  width: 50%;
+  margin: 30px 30px 0 30px;
 }
 /*# sourceMappingURL=index.css.map */

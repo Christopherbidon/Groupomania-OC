@@ -13,7 +13,7 @@ exports.createPost = async (req, res, next) => {
          "INSERT INTO posts (owner_id, content, date, image_url) VALUES ($1, $2, $3, $4)",
          [ownerId, content, date, imageUrl]
       );
-      res.status(201).json();
+      res.status(201).json("ok");
    } catch (err) {
       console.log(err.message);
    }
@@ -92,13 +92,16 @@ exports.deletePost = async (req, res, next) => {
                   error: "Requête non autorisée !",
                });
             }
-            if (imageUrl !== null) {
+            if (imageUrl != null) {
                fs.unlink(`medias/${imageUrl.split("/medias/")[1]}`, (err) => {
                   if (err) console.log(err);
                });
             }
-            pool.query("DELETE FROM likes WHERE post_id = $1", [id]);
+            if (post.rows[0].likes != 0) {
+               pool.query("DELETE FROM likes WHERE post_id = $1", [id]);
+            }
             pool.query("DELETE FROM posts WHERE post_id = $1", [id]);
+
             return res.status(200).json("Post et like supprimé");
          } catch (err) {
             return res.status(400).json(err);

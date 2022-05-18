@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Blog from "./components/Blog";
 import Connexion from "./components/Connexion";
-import Main from "./components/Main";
 
 const App = () => {
    const [user, setUser] = useState(null);
@@ -9,7 +9,7 @@ const App = () => {
    }, []);
 
    return (
-      <div className="main">{user ? <Main user={user} /> : <Connexion />}</div>
+      <div className="main">{user ? <Blog user={user} /> : <Connexion />}</div>
    );
 };
 

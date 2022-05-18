@@ -7,19 +7,20 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(fas);
 
-const InputPost = () => {
+const InputPost = ({ functionGetData }) => {
    const [selectedImage, setSelectedImage] = useState();
    const [textImage, setTextImage] = useState(
       "Veuillez selectionner une image"
    );
    const [content, setContent] = useState("");
    const [user, setUser] = useState(null);
-   useEffect(() => {
-      setUser(JSON.parse(sessionStorage.getItem("user")));
-   }, []);
    const [messagePopup, setMessagePopup] = useState("");
    const [valuePopup, setValuePopup] = useState("");
    const [popup, setPopup] = useState(false);
+
+   useEffect(() => {
+      setUser(JSON.parse(sessionStorage.getItem("user")));
+   }, []);
 
    const popupTimeOut = () => {
       setPopup(true);
@@ -53,12 +54,12 @@ const InputPost = () => {
          setSelectedImage(file);
       }
    };
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault();
       const formData = new FormData();
       formData.append("content", content);
       formData.append("image", selectedImage);
-      axios
+      await axios
          .post("http://localhost:4000/posts", formData, {
             headers: { Authorization: `beared ${user.token}` },
          })
@@ -70,6 +71,7 @@ const InputPost = () => {
                setValuePopup("valid");
                popupTimeOut();
             }
+            functionGetData();
          })
          .catch((err) => {
             console.log(err);

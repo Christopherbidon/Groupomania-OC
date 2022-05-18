@@ -5,8 +5,8 @@ import Post from "../components/Post";
 const AllPosts = ({ user }) => {
    const [postsData, setPostsData] = useState([]);
 
-   useEffect(() => {
-      axios
+   const getData = async () => {
+      await axios
          .get("http://localhost:4000/posts", {
             headers: {
                Authorization: `beared ${user.token}`,
@@ -14,9 +14,12 @@ const AllPosts = ({ user }) => {
          })
          .then((res) => {
             setPostsData(res.data);
-            console.log(res.data);
          })
          .catch((err) => console.log(err));
+   };
+
+   useEffect(() => {
+      getData();
    }, []);
 
    const handleLogout = () => {
@@ -27,9 +30,16 @@ const AllPosts = ({ user }) => {
    return (
       <div className="postContainer">
          <ul>
-            {postsData.map((post, index) => (
-               <Post key={index} post={post} user={user} />
-            ))}
+            {postsData
+               .sort((a, b) => b.date - a.date)
+               .map((post, index) => (
+                  <Post
+                     key={index}
+                     post={post}
+                     user={user}
+                     functionGetData={getData}
+                  />
+               ))}
          </ul>
          <input
             type="button"
