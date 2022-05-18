@@ -24,11 +24,21 @@ input[type="submit"] {
    cursor: pointer;
    &__update {
       background-color: #fbb93e;
+      height: 25px;
+      width: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
    }
    &__cancel {
       background-color: #fa5454;
    }
    &__delete {
       background-color: #fa5454;
+      height: 25px;
+      width: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
    }
 }

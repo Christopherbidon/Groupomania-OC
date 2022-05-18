@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #666e66;
+  background-color: #18181a;
 }
 
 .main {
@@ -219,7 +219,7 @@ body {
   width: 80%;
   max-width: 1000px;
   border-radius: 5px;
-  background-color: #888888;
+  background-color: #252426;
 }
 
 .containerInputPost__form {
@@ -256,7 +256,7 @@ body {
           align-items: center;
   padding: 5px;
   overflow: hidden;
-  background-color: #666e66;
+  background-color: #18181a;
   border: 2px solid black;
   margin: 10px 0;
 }
@@ -413,6 +413,17 @@ input[type="submit"]:hover {
 
 .buttonPost__update {
   background-color: #fbb93e;
+  height: 25px;
+  width: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .buttonPost__cancel {
@@ -421,6 +432,17 @@ input[type="submit"]:hover {
 
 .buttonPost__delete {
   background-color: #fa5454;
+  height: 25px;
+  width: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .postContainer {
@@ -443,33 +465,57 @@ input[type="submit"]:hover {
           flex-direction: column;
   margin-top: 20px;
   border-radius: 5px;
-  background-color: #888888;
+  background-color: #252426;
 }
 
 .post__header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
-
-.post .postOwner {
-  margin: 30px 30px 0 30px;
-  width: 50%;
-  color: #4a4a4a;
+  margin: 20px 20px 0 20px;
 }
 
 .post li {
   width: 100%;
-  padding: 15px 30px 30px 30px;
+  padding: 15px 20px 20px 20px;
   list-style: none;
 }
 
 .post__content {
-  background-color: white;
   border-radius: 3px;
   min-height: 40px;
   width: 100%;
+  color: #e3e5eb;
+}
+
+.post__content__update {
+  background-color: #252426;
   padding: 5px 10px;
+}
+
+.post__content__update:focus-visible {
+  outline: none;
+}
+
+.postOwner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  width: 50%;
+}
+
+.postOwner__text {
+  font-size: 12px;
+  color: #afb2b8;
+  line-height: 25px;
+}
+
+.postOwner__img {
+  background-color: #3a3a3c;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
 }
 
 .buttonPostContainer {
@@ -481,6 +527,5 @@ input[type="submit"]:hover {
           justify-content: flex-end;
   gap: 10px;
   width: 50%;
-  margin: 30px 30px 0 30px;
 }
 /*# sourceMappingURL=index.css.map */

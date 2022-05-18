@@ -12,33 +12,50 @@
    flex-direction: column;
    margin-top: 20px;
    border-radius: 5px;
-   background-color: #888888;
+   background-color: $secondaryBackgroundColor;
    &__header {
       display: flex;
-   }
-   .postOwner {
-      margin: 30px 30px 0 30px;
-      width: 50%;
-      color: $secondaryTextColor;
+      margin: 20px 20px 0 20px;
    }
    li {
       width: 100%;
-      padding: 15px 30px 30px 30px;
+      padding: 15px 20px 20px 20px;
       list-style: none;
    }
    &__content {
-      background-color: white;
       border-radius: 3px;
       min-height: 40px;
       width: 100%;
-      padding: 5px 10px;
+      color: $primaryTextColor;
+      &__update {
+         background-color: $secondaryBackgroundColor;
+         padding: 5px 10px;
+         &:focus-visible {
+            outline: none;
+         }
+      }
    }
 }
 
+.postOwner {
+   display: flex;
+   gap: 10px;
+   width: 50%;
+   &__text {
+      font-size: 12px;
+      color: $secondaryTextColor;
+      line-height: 25px;
+   }
+   &__img {
+      background-color: $tertiaryBackgroundColor;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+   }
+}
 .buttonPostContainer {
    display: flex;
    justify-content: flex-end;
    gap: 10px;
    width: 50%;
-   margin: 30px 30px 0 30px;
 }

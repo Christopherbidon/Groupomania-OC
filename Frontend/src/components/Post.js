@@ -1,6 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Popup from "./Popup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(fas);
 
 const Post = ({ post, user, functionGetData }) => {
    const [messagePopup, setMessagePopup] = useState("");
@@ -82,13 +87,16 @@ const Post = ({ post, user, functionGetData }) => {
                <Popup value={valuePopup} popupText={messagePopup} />
             ) : null}
             <div className="post__header">
-               <p className="postOwner">
-                  {`Créer par ` +
-                     ownerData.firstname +
-                     " " +
-                     ownerData.name +
-                     "."}
-               </p>
+               <div className="postOwner">
+                  <div className="postOwner__img"></div>
+                  <p className="postOwner__text">
+                     {`Créer par ` +
+                        ownerData.firstname +
+                        " " +
+                        ownerData.name +
+                        "."}
+                  </p>
+               </div>
                {post.owner_id == user.userId || user.admin ? (
                   <div className="buttonPostContainer">
                      {!onUpdatePost ? (
@@ -96,7 +104,7 @@ const Post = ({ post, user, functionGetData }) => {
                            className="buttonPost buttonPost__update"
                            onClick={() => setOnUpdatePost(true)}
                         >
-                           Modifier
+                           <FontAwesomeIcon icon="fa-solid fa-pencil" />
                         </button>
                      ) : (
                         <button
@@ -111,7 +119,7 @@ const Post = ({ post, user, functionGetData }) => {
                            className="buttonPost buttonPost__delete"
                            onClick={() => handleDelete()}
                         >
-                           Supprimer
+                           <FontAwesomeIcon icon="fa-solid fa-trash" />
                         </button>
                      ) : (
                         <button
@@ -132,8 +140,9 @@ const Post = ({ post, user, functionGetData }) => {
                <li>
                   <textarea
                      value={newContent}
-                     className="post__content"
+                     className="post__content post__content__update"
                      onChange={(e) => setNewContent(e.target.value)}
+                     autoFocus
                   ></textarea>
                </li>
             )}
