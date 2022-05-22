@@ -82,7 +82,7 @@ const Post = ({ post, user, functionGetData }) => {
 
    return (
       <>
-         <div className="post">
+         <li className="post">
             {popup ? (
                <Popup value={valuePopup} popupText={messagePopup} />
             ) : null}
@@ -133,20 +133,20 @@ const Post = ({ post, user, functionGetData }) => {
                ) : null}
             </div>
             {!onUpdatePost ? (
-               <li>
-                  <p className="post__content">{newContent}</p>
-               </li>
+               <div className="post__content">
+                  <p className="post__text">{newContent}</p>
+               </div>
             ) : (
-               <li>
+               <div className="post__content">
                   <textarea
                      value={newContent}
-                     className="post__content post__content__update"
+                     className="post__text post__text__update"
                      onChange={(e) => setNewContent(e.target.value)}
                      autoFocus
                   ></textarea>
-               </li>
+               </div>
             )}
-         </div>
+         </li>
       </>
    );
 };

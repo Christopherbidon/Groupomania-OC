@@ -18,17 +18,17 @@
          padding: 5px 15px;
       }
       input[type="file"] {
-         margin: 10px 0 10px 0;
          overflow: auto;
       }
       .preview {
          display: flex;
          height: 100px;
-         gap: 30px;
+         gap: 20px;
          align-items: center;
          padding: 5px;
          overflow: hidden;
          background-color: $primaryBackgroundColor;
+         color: $secondaryTextColor;
          border: 2px solid black;
          margin: 10px 0;
          img {
@@ -41,8 +41,9 @@
 .containerInputFile {
    display: inline-block;
    position: relative;
-   overflow: hidden;
    cursor: pointer;
+   min-height: 35px;
+   width: 150px;
    input[type="file"] {
       left: 0;
       top: 0;
@@ -50,6 +51,9 @@
       position: absolute;
       font-size: 90px;
       cursor: pointer;
+      min-height: 35px;
+      max-height: 50px;
+      width: 150px;
    }
    .btnUploadFile {
       background-color: #fff;
@@ -60,6 +64,8 @@
       font-size: 14px;
       font-weight: bold;
       cursor: pointer;
+      min-height: 35px;
+      width: 150px;
    }
 }
 

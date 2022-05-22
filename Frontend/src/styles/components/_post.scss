@@ -17,12 +17,12 @@
       display: flex;
       margin: 20px 20px 0 20px;
    }
-   li {
+   &__content {
       width: 100%;
       padding: 15px 20px 20px 20px;
       list-style: none;
    }
-   &__content {
+   &__text {
       border-radius: 3px;
       min-height: 40px;
       width: 100%;

@@ -1,0 +1,38 @@
+.header {
+   display: flex;
+   justify-content: space-between;
+   height: 80px;
+   width: 100%;
+   background-color: $secondaryBackgroundColor;
+   &__logoContainer {
+      display: flex;
+      height: 100%;
+      width: 300px;
+      overflow: hidden;
+      margin-left: 40px;
+      img {
+         width: 80%;
+      }
+   }
+}
+
+.navbar {
+   height: 100%;
+   ul {
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+      height: 100%;
+      li {
+         display: flex;
+         align-items: center;
+         height: 100%;
+         cursor: pointer;
+         color: $primaryTextColor;
+         padding: 0 25px;
+         &:hover {
+            background-color: $tertiaryBackgroundColor;
+         }
+      }
+   }
+}

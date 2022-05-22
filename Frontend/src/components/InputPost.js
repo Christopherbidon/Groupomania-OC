@@ -10,7 +10,7 @@ library.add(fas);
 const InputPost = ({ functionGetData }) => {
    const [selectedImage, setSelectedImage] = useState();
    const [textImage, setTextImage] = useState(
-      "Veuillez selectionner une image"
+      "Veuillez sélectionner une image"
    );
    const [content, setContent] = useState("");
    const [user, setUser] = useState(null);
@@ -79,8 +79,7 @@ const InputPost = ({ functionGetData }) => {
    };
 
    const handleResetImage = () => {
-      console.log("ok");
-      setTextImage(null);
+      setTextImage("Veuillez sélectionner une image");
       setSelectedImage(null);
    };
    return (

@@ -11,7 +11,6 @@
 		password VARCHAR(200) NOT NULL,
 		name VARCHAR(50) NOT NULL,
 		firstname VARCHAR(50) NOT NULL,
-		civilite char(1) NOT NULL,
 		admin BOOLEAN DEFAULT FALSE
 	);
 	

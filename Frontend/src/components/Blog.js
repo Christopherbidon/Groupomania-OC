@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Header from "./Header";
 import InputPost from "./InputPost";
 import Post from "./Post";
 
@@ -15,22 +16,19 @@ const Blog = ({ user }) => {
          })
          .then((res) => {
             setPostsData(res.data);
+            console.log(postsData);
          })
          .catch((err) => console.log(err));
-      console.log(postsData);
    };
 
    useEffect(() => {
       getData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
-
-   const handleLogout = () => {
-      sessionStorage.removeItem("user");
-      window.location.reload();
-   };
 
    return (
       <>
+         <Header />
          <InputPost functionGetData={getData} />
          <div className="postContainer">
             <ul>
@@ -45,11 +43,6 @@ const Blog = ({ user }) => {
                      />
                   ))}
             </ul>
-            <input
-               type="button"
-               value="Se Déconnecter"
-               onClick={() => handleLogout()}
-            />
          </div>
       </>
    );
