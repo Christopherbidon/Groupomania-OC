@@ -13,7 +13,9 @@ const Header = () => {
          </div>
          <nav className="navbar">
             <ul>
-               <li>Profil</li>
+               <li>
+                  <div className="headerAvatar"></div>Profil
+               </li>
                <li onClick={() => handleLogout()}>Se déconnecter</li>
             </ul>
          </nav>

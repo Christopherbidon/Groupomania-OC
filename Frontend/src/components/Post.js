@@ -4,6 +4,7 @@ import Popup from "./Popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import LikesBar from "./LikesBar";
 
 library.add(fas);
 
@@ -12,7 +13,6 @@ const Post = ({ post, user, functionGetData }) => {
    const [valuePopup, setValuePopup] = useState("");
    const [popup, setPopup] = useState(false);
    const [onUpdatePost, setOnUpdatePost] = useState(false);
-   const [content, setContent] = useState(post.content);
    const [newContent, setNewContent] = useState(post.content);
    const [newImage, setNewImage] = useState();
    const [ownerData, setOwnerData] = useState("");
@@ -69,11 +69,8 @@ const Post = ({ post, user, functionGetData }) => {
          })
          .then((res) => {
             if (res.status == 200) {
-               setMessagePopup("Post supprimé avec succès !");
-               setValuePopup("valid");
-               popupTimeOut();
+               window.location.reload();
             }
-            functionGetData();
          })
          .catch((err) => {
             console.log(err);
@@ -88,7 +85,7 @@ const Post = ({ post, user, functionGetData }) => {
             ) : null}
             <div className="post__header">
                <div className="postOwner">
-                  <div className="postOwner__img"></div>
+                  <div className="postOwner__avatar"></div>
                   <p className="postOwner__text">
                      {`Créer par ` +
                         ownerData.firstname +
@@ -146,6 +143,11 @@ const Post = ({ post, user, functionGetData }) => {
                   ></textarea>
                </div>
             )}
+            <LikesBar
+               post={post}
+               user={user}
+               functionGetData={functionGetData}
+            />
          </li>
       </>
    );

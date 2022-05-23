@@ -11,6 +11,7 @@
 		password VARCHAR(200) NOT NULL,
 		name VARCHAR(50) NOT NULL,
 		firstname VARCHAR(50) NOT NULL,
+		avatar_url VARCHAR(255),
 		admin BOOLEAN DEFAULT FALSE
 	);
 	

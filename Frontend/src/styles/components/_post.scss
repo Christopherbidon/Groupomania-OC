@@ -19,7 +19,7 @@
    }
    &__content {
       width: 100%;
-      padding: 15px 20px 20px 20px;
+      padding: 15px 20px;
       list-style: none;
    }
    &__text {
@@ -46,7 +46,7 @@
       color: $secondaryTextColor;
       line-height: 25px;
    }
-   &__img {
+   &__avatar {
       background-color: $tertiaryBackgroundColor;
       width: 25px;
       height: 25px;

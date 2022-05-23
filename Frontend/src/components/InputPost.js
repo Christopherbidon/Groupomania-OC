@@ -111,7 +111,10 @@ const InputPost = ({ functionGetData }) => {
                   />
                </div>
                {selectedImage ? (
-                  <img src={window.URL.createObjectURL(selectedImage)} />
+                  <img
+                     src={window.URL.createObjectURL(selectedImage)}
+                     alt="Fichier sélectionner"
+                  />
                ) : null}
                <p>{textImage}</p>
                {selectedImage ? (

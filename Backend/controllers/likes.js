@@ -1,6 +1,6 @@
 const pool = require("../config/db-config");
 
-exports.addLike = async (req, res, next) => {
+exports.getLike = async (req, res, next) => {
    const { userId } = req.auth;
    const postId = req.params.idPost;
 
@@ -10,7 +10,27 @@ exports.addLike = async (req, res, next) => {
          postId,
       ])
       .then((like) => {
-         console.log(like.rows.length);
+         if (like.rows.length >= 1) {
+            return res.status(200).json(like.rows[0].like_value);
+         } else {
+            return res.status(200).json({ message: "Aucun like pour ce post" });
+         }
+      })
+      .catch((err) => console.log(err));
+};
+
+exports.addLike = async (req, res, next) => {
+   const { userId } = req.auth;
+   const postId = req.params.idPost;
+
+   console.log(userId, postId);
+
+   await pool
+      .query("SELECT * FROM likes WHERE (owner_id = $1) AND (post_id = $2)", [
+         userId,
+         postId,
+      ])
+      .then((like) => {
          if (like.rows.length >= 1) {
             const likeId = like.rows[0].like_id;
             if (like.rows[0].like_value == false) {
@@ -103,4 +123,47 @@ exports.addDislike = async (req, res, next) => {
          }
       })
       .catch((err) => console.log(err));
+};
+
+exports.deleteLike = async (req, res, next) => {
+   const { userId } = req.auth;
+   const postId = req.params.idPost;
+
+   console.log("passage ici");
+
+   await pool
+      .query("SELECT * FROM likes WHERE (owner_id = $1) AND (post_id = $2)", [
+         userId,
+         postId,
+      ])
+      .then((like) => {
+         const like_value = like.rows[0].like_value;
+         if (like_value == true) {
+            pool.query(
+               "UPDATE posts set likes = likes - 1 WHERE post_id = $1",
+               [postId]
+            );
+         } else {
+            pool.query(
+               "UPDATE posts set dislikes = dislikes - 1 WHERE post_id = $1",
+               [postId]
+            );
+         }
+
+         pool
+            .query(
+               "DELETE FROM likes WHERE (owner_id = $1) AND (post_id = $2)",
+               [userId, postId]
+            )
+            .then(() => {
+               return res
+                  .status(200)
+                  .json({ message: "Like supprimé avec succès" });
+            })
+            .catch(() => {
+               return res
+                  .status(400)
+                  .json({ message: "Suppression du like échoué" });
+            });
+      });
 };

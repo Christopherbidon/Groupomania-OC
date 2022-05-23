@@ -4,6 +4,7 @@ const path = require("path");
 const postRoutes = require("./routes/posts");
 const userRoutes = require("./routes/users");
 const likeRoutes = require("./routes/likes");
+const commentRoutes = require("./routes/comments");
 
 app.use(express.json());
 
@@ -27,5 +28,7 @@ app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 
 app.use("/likes", likeRoutes);
+
+app.use("/comments", commentRoutes);
 
 module.exports = app;
