@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import LikesBar from "./LikesBar";
+import InputComment from "./InputComment";
+import AllComments from "./AllComments";
 
 library.add(fas);
 
@@ -148,6 +150,7 @@ const Post = ({ post, user, functionGetData }) => {
                user={user}
                functionGetData={functionGetData}
             />
+            <AllComments postId={post.post_id} user={user} />
          </li>
       </>
    );

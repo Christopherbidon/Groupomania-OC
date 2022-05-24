@@ -16,7 +16,6 @@ const Blog = ({ user }) => {
          })
          .then((res) => {
             setPostsData(res.data);
-            console.log(postsData);
          })
          .catch((err) => console.log(err));
    };

@@ -5,10 +5,9 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-library.add(far);
-library.add(fas);
+library.add(far, fas);
 
-const LikesBar = ({ post, user, functionGetData }) => {
+const LikesBar = ({ post, user }) => {
    const [isLiked, setIsLiked] = useState(false);
    const [isDisliked, setIsDisliked] = useState(false);
    const [likesNumber, setLikesNumber] = useState(post.likes);
@@ -22,7 +21,6 @@ const LikesBar = ({ post, user, functionGetData }) => {
             },
          })
          .then((res) => {
-            console.log(res.data);
             if (res.data == true) {
                setIsLiked(true);
             } else if (res.data == false) {
@@ -34,7 +32,6 @@ const LikesBar = ({ post, user, functionGetData }) => {
 
    useEffect(() => {
       getLikes();
-      console.log(user.token);
    }, []);
 
    const addLikeToDataBase = () => {
@@ -64,7 +61,6 @@ const LikesBar = ({ post, user, functionGetData }) => {
             },
          })
          .then((res) => console.log(res));
-      functionGetData();
    };
 
    const handleDislike = () => {

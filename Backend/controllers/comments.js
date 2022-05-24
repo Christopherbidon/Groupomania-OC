@@ -23,6 +23,7 @@ exports.createComment = async (req, res, next) => {
       const { postId } = req.params;
       const content = req.body.content;
       const date = Date.now();
+      console.log(content);
       await pool.query(
          "INSERT INTO comments (owner_id, post_id, content, date) VALUES ($1, $2, $3, $4)",
          [ownerId, postId, content, date]
