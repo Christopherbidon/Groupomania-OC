@@ -6,13 +6,7 @@ exports.getAllComments = async (req, res, next) => {
    await pool
       .query("SELECT * FROM comments WHERE post_id = $1", [postId])
       .then((comments) => {
-         if (comments.rows.length >= 1) {
-            return res.status(200).json(comments.rows);
-         } else {
-            return res
-               .status(200)
-               .json({ message: "Aucun commentaire pour ce post" });
-         }
+         return res.status(200).json(comments.rows);
       })
       .catch((err) => console.log(err));
 };

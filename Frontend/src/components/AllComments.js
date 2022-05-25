@@ -19,7 +19,6 @@ const AllComments = ({ postId, user }) => {
 
    useEffect(() => {
       getAllComments();
-      console.log(allCommentsData);
    }, []);
 
    return (
@@ -27,9 +26,9 @@ const AllComments = ({ postId, user }) => {
          <ul className="AllComments__container">
             {allCommentsData
                .sort((a, b) => a.date - b.date)
-               .map((comment, index) => (
+               .map((comment) => (
                   <Comment
-                     key={index}
+                     key={comment.comment_id}
                      comment={comment}
                      user={user}
                      functionGetCommentData={getAllComments}

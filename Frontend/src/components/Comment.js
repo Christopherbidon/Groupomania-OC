@@ -1,7 +1,6 @@
 import React from "react";
 
 const Comment = ({ comment, user, functionGetCommentData }) => {
-   console.log(comment);
    return (
       <li className="comment">
          <div className="comment__avatarContainer"></div>
