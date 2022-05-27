@@ -1,0 +1,31 @@
+.inputComment {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 5px;
+   gap: 5px;
+   &__avatarBox {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      background-color: $tertiaryBackgroundColor;
+   }
+   &__textArea {
+      flex-grow: 2;
+      height: 36px;
+      resize: none;
+      background-color: $tertiaryBackgroundColor;
+      border: none;
+      border-radius: 18px;
+      padding: 8px 12px;
+      line-height: 18px;
+      color: $secondaryTextColor;
+      &:focus-visible {
+         outline: none;
+      }
+      &::placeholder {
+         color: $secondaryTextColor;
+      }
+   }
+}

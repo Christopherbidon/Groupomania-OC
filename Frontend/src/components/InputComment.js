@@ -39,17 +39,22 @@ const InputComment = ({ postId, user, functionGetCommentData }) => {
    };
 
    return (
-      <div className="inputComment">
+      <form className="inputComment">
+         <div className="inputComment__avatarBox"></div>
          <textarea
             onChange={(e) => setContent(e.target.value)}
             className="inputComment__textArea"
             value={content}
             placeholder="Tapez votre commentaire ici !"
          ></textarea>
-         <button onClick={(e) => handleSubmitComment(e)}>
+         <button
+            className="inputComment__btnSubmit"
+            type="submit"
+            onClick={(e) => handleSubmitComment(e)}
+         >
             <FontAwesomeIcon icon="fa-regular fa-paper-plane" />
          </button>
-      </div>
+      </form>
    );
 };
 

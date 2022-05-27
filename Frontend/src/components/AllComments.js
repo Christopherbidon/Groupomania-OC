@@ -23,7 +23,7 @@ const AllComments = ({ postId, user }) => {
 
    return (
       <>
-         <ul className="AllComments__container">
+         <ul className="allComments__container">
             {allCommentsData
                .sort((a, b) => a.date - b.date)
                .map((comment) => (

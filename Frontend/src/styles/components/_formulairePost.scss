@@ -12,16 +12,24 @@
       width: 100%;
       padding: 30px;
       textarea {
-         height: 100%;
-         padding: 5px 15px;
+         height: 40px;
+         padding: 8px 12px;
          background-color: $tertiaryBackgroundColor;
          border: none;
          color: $secondaryTextColor;
+         border-radius: 25px;
+         line-height: 24px;
+         resize: none;
+         font-size: 17px;
          &::placeholder {
             color: $secondaryTextColor;
          }
          &:focus-visible {
+            animation: textareaGrow 0.5s ease-in-out;
+            padding-top: 5px;
             outline: none;
+            height: 120px;
+            line-height: 30px;
          }
       }
       .preview {
@@ -74,4 +82,13 @@
 
 .deleteImage {
    cursor: pointer;
+}
+
+@keyframes textareaGrow {
+   from {
+      height: 40px;
+   }
+   to {
+      height: 120px;
+   }
 }

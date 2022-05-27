@@ -35,32 +35,26 @@ const LikesBar = ({ post, user }) => {
    }, []);
 
    const addLikeToDataBase = () => {
-      axios
-         .post(`http://localhost:4000/likes/${post.post_id}/like`, "", {
-            headers: {
-               Authorization: `beared ${user.token}`,
-            },
-         })
-         .then((res) => console.log(res));
+      axios.post(`http://localhost:4000/likes/${post.post_id}/like`, "", {
+         headers: {
+            Authorization: `beared ${user.token}`,
+         },
+      });
    };
    const addDislikeToDataBase = () => {
-      axios
-         .post(`http://localhost:4000/likes/${post.post_id}/dislike`, "", {
-            headers: {
-               Authorization: `beared ${user.token}`,
-            },
-         })
-         .then((res) => console.log(res));
+      axios.post(`http://localhost:4000/likes/${post.post_id}/dislike`, "", {
+         headers: {
+            Authorization: `beared ${user.token}`,
+         },
+      });
    };
 
    const deleteLikeToDataBase = () => {
-      axios
-         .delete(`http://localhost:4000/likes/${post.post_id}`, {
-            headers: {
-               Authorization: `beared ${user.token}`,
-            },
-         })
-         .then((res) => console.log(res));
+      axios.delete(`http://localhost:4000/likes/${post.post_id}`, {
+         headers: {
+            Authorization: `beared ${user.token}`,
+         },
+      });
    };
 
    const handleDislike = () => {
