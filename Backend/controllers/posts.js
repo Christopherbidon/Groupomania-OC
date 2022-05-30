@@ -13,7 +13,7 @@ exports.createPost = async (req, res, next) => {
          "INSERT INTO posts (owner_id, content, date, image_url) VALUES ($1, $2, $3, $4)",
          [ownerId, content, date, imageUrl]
       );
-      res.status(201).json("ok");
+      res.status(201).json({ message: "Post créer avec succès" });
    } catch (err) {
       console.log(err.message);
    }
@@ -44,13 +44,11 @@ exports.modifyPost = async (req, res, next) => {
    await pool
       .query("SELECT * FROM posts WHERE post_id = $1", [postId])
       .then((post) => {
-         console.log(post.rows[0]);
          if (!post.rows[0]) {
             return res.status(404).json({
                error: "Post non trouvé !",
             });
          }
-         console.log(req.auth.userAdmin);
          if (
             post.rows[0].owner_id !== req.auth.userId &&
             req.auth.userAdmin !== true
@@ -64,7 +62,7 @@ exports.modifyPost = async (req, res, next) => {
                "UPDATE posts set content = $1, image_url = $2 WHERE post_id = $3",
                [content, imageUrl, postId]
             )
-            .then(res.status(200).json("Post mis à jour"))
+            .then(res.status(200).json({ message: "Post mis à jour" }))
             .catch((err) => console.error(err));
       })
       .catch((err) => console.log(err));
@@ -102,7 +100,7 @@ exports.deletePost = async (req, res, next) => {
             }
             pool.query("DELETE FROM posts WHERE post_id = $1", [id]);
 
-            return res.status(200).json("Post et like supprimé");
+            return res.status(200).json({ message: "Post et like supprimé" });
          } catch (err) {
             return res.status(400).json(err);
          }

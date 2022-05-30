@@ -33,5 +33,44 @@
       width: 32px;
       border-radius: 50%;
       background-color: $tertiaryBackgroundColor;
+      overflow: hidden;
+      img {
+         height: 100%;
+      }
+   }
+}
+
+.buttonEditDeleteComment {
+   height: 23px;
+   width: 23px;
+   align-self: center;
+   display: flex;
+   cursor: pointer;
+   &__point {
+      height: 4px;
+      width: 4px;
+      background-color: $primaryTextColor;
+      margin-left: 10px;
+      align-self: center;
+      position: relative;
+      border-radius: 50%;
+      &::before {
+         content: "";
+         position: absolute;
+         left: -9px;
+         height: 4px;
+         width: 4px;
+         background-color: $primaryTextColor;
+         border-radius: 50%;
+      }
+      &::after {
+         content: "";
+         position: absolute;
+         left: 9px;
+         height: 4px;
+         width: 4px;
+         background-color: $primaryTextColor;
+         border-radius: 50%;
+      }
    }
 }

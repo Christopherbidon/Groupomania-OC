@@ -8,9 +8,11 @@ exports.getUser = (req, res, next) => {
    pool
       .query("SELECT * FROM users WHERE user_id = $1", [id])
       .then((data) => {
+         console.log(data);
          const exportsData = {
             name: data.rows[0].name,
             firstname: data.rows[0].firstname,
+            avatar_url: data.rows[0].avatar_url,
          };
          res.status(200).json(exportsData);
       })
@@ -56,6 +58,7 @@ exports.loginUser = (req, res, next) => {
                res.status(200).json({
                   userId: user.user_id,
                   admin: user.admin,
+                  avatarUrl: user.avatar_url,
                   token: jwt.sign(
                      { userId: user.user_id, admin: user.admin },
                      process.env.JWT_PRIVATE_KEY,
@@ -68,7 +71,7 @@ exports.loginUser = (req, res, next) => {
       .catch((err) => res.status(500).json({ err }));
 };
 
-exports.modifyUser = (req, res, next) => {
+exports.modifyUserPassword = (req, res, next) => {
    const userId = req.auth.userId;
    pool
       .query("SELECT * FROM users WHERE user_id = $1", [userId])
@@ -97,6 +100,20 @@ exports.modifyUser = (req, res, next) => {
             })
             .catch((err) => res.status(500).json({ err }));
       })
+      .catch((err) => res.status(500).json({ err }));
+};
+
+exports.modifyUserAvatar = (req, res, next) => {
+   const userId = req.auth.userId;
+   const avatar_url = req.file
+      ? `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`
+      : null;
+   pool
+      .query("UPDATE users SET avatar_url = $1 WHERE user_id = $2", [
+         avatar_url,
+         userId,
+      ])
+      .then(() => res.status(200).json({ message: "Avatar mis à jour" }))
       .catch((err) => res.status(500).json({ err }));
 };
 

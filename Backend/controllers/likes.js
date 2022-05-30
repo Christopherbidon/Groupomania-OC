@@ -23,8 +23,6 @@ exports.addLike = async (req, res, next) => {
    const { userId } = req.auth;
    const postId = req.params.idPost;
 
-   console.log(userId, postId);
-
    await pool
       .query("SELECT * FROM likes WHERE (owner_id = $1) AND (post_id = $2)", [
          userId,
@@ -82,7 +80,6 @@ exports.addDislike = async (req, res, next) => {
          postId,
       ])
       .then((like) => {
-         console.log(like.rows.length);
          if (like.rows.length >= 1) {
             const likeId = like.rows[0].like_id;
             if (like.rows[0].like_value == true) {
@@ -128,8 +125,6 @@ exports.addDislike = async (req, res, next) => {
 exports.deleteLike = async (req, res, next) => {
    const { userId } = req.auth;
    const postId = req.params.idPost;
-
-   console.log("passage ici");
 
    await pool
       .query("SELECT * FROM likes WHERE (owner_id = $1) AND (post_id = $2)", [

@@ -40,7 +40,9 @@ const InputComment = ({ postId, user, functionGetCommentData }) => {
 
    return (
       <form className="inputComment">
-         <div className="inputComment__avatarBox"></div>
+         <div className="inputComment__avatarBox">
+            <img src={user.avatarUrl} alt="" />
+         </div>
          <textarea
             onChange={(e) => setContent(e.target.value)}
             className="inputComment__textArea"

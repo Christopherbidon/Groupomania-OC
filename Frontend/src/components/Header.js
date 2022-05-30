@@ -1,7 +1,8 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/images/icon-left-font-monochrome-white.svg";
 
-const Header = () => {
+const Header = ({ user }) => {
    const handleLogout = () => {
       sessionStorage.removeItem("user");
       window.location.reload();
@@ -14,7 +15,10 @@ const Header = () => {
          <nav className="navbar">
             <ul>
                <li>
-                  <div className="headerAvatar"></div>Profil
+                  <div className="headerAvatar">
+                     <img src={user.avatarUrl} alt="" />
+                  </div>
+                  Profil
                </li>
                <li onClick={() => handleLogout()}>Se déconnecter</li>
             </ul>

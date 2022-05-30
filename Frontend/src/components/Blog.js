@@ -27,7 +27,7 @@ const Blog = ({ user }) => {
 
    return (
       <>
-         <Header />
+         <Header user={user} />
          <InputPost functionGetData={getData} />
          <div className="postContainer">
             <ul>

@@ -43,4 +43,8 @@
    border-radius: 50%;
    background-color: $tertiaryBackgroundColor;
    margin-right: 10px;
+   overflow: hidden;
+   img {
+      height: 100%;
+   }
 }

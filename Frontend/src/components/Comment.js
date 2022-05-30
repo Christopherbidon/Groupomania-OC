@@ -16,7 +16,9 @@ const Comment = ({ comment, user, functionGetCommentData }) => {
 
    return (
       <li className="comment">
-         <div className="comment__avatarBox"></div>
+         <div className="comment__avatarBox">
+            <img src={ownerData.avatar_url} alt="" />
+         </div>
          <p className="comment__content">
             <span className="comment__ownerText">
                {ownerData.name + " " + ownerData.firstname}
@@ -24,6 +26,11 @@ const Comment = ({ comment, user, functionGetCommentData }) => {
             <br />
             {comment.content}
          </p>
+         {comment.owner_id == user.userId || user.admin ? (
+            <div className="buttonEditDeleteComment">
+               <div className="buttonEditDeleteComment__point"></div>
+            </div>
+         ) : null}
       </li>
    );
 };

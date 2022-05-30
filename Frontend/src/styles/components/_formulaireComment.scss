@@ -10,6 +10,10 @@
       width: 32px;
       border-radius: 50%;
       background-color: $tertiaryBackgroundColor;
+      overflow: hidden;
+      img {
+         height: 100%;
+      }
    }
    &__textArea {
       flex-grow: 2;

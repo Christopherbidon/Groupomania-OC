@@ -87,7 +87,9 @@ const Post = ({ post, user, functionGetData }) => {
             ) : null}
             <div className="post__header">
                <div className="postOwner">
-                  <div className="postOwner__avatar"></div>
+                  <div className="postOwner__avatar">
+                     <img src={ownerData.avatar_url} alt="" />
+                  </div>
                   <p className="postOwner__text">
                      {`Créer par ` +
                         ownerData.firstname +
@@ -145,6 +147,11 @@ const Post = ({ post, user, functionGetData }) => {
                   ></textarea>
                </div>
             )}
+            {post.image_url ? (
+               <div className="post__boxImage">
+                  <img src={post.image_url} />
+               </div>
+            ) : null}
             <LikesBar
                post={post}
                user={user}
