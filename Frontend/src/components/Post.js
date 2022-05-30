@@ -16,8 +16,10 @@ const Post = ({ post, user, functionGetData }) => {
    const [popup, setPopup] = useState(false);
    const [onUpdatePost, setOnUpdatePost] = useState(false);
    const [newContent, setNewContent] = useState(post.content);
-   const [newImage, setNewImage] = useState();
    const [ownerData, setOwnerData] = useState("");
+   const [postImage, setPostImage] = useState(post.image_url);
+   const [selectedImage, setSelectedImage] = useState(null);
+   const [textImage, setTextImage] = useState("");
 
    useEffect(() => {
       axios
@@ -40,14 +42,20 @@ const Post = ({ post, user, functionGetData }) => {
    const handleCancel = () => {
       setOnUpdatePost(false);
       setNewContent(post.content);
+      setSelectedImage(null);
+      setPostImage(post.image_url);
    };
 
-   const handleUpdate = async (e) => {
-      const formData = new FormData();
-      formData.append("content", newContent);
-      formData.append("image", newImage);
+   const handleUpdate = async () => {
+      const data = new FormData();
+      data.append("content", newContent);
+      if (selectedImage != null) {
+         data.append("image", selectedImage);
+      } else {
+         data.append("imageUrl", post.image_url);
+      }
       await axios
-         .put(`http://localhost:4000/posts/${post.post_id}`, formData, {
+         .put(`http://localhost:4000/posts/${post.post_id}`, data, {
             headers: { Authorization: `beared ${user.token}` },
          })
          .then((res) => {
@@ -79,6 +87,50 @@ const Post = ({ post, user, functionGetData }) => {
          });
    };
 
+   const ImageDisplay = () => {
+      console.log(selectedImage);
+      if (onUpdatePost) {
+         return (
+            <div className="previewUpdatePost">
+               <div className="containerInputFile">
+                  <button className="btnUploadFile">"Modifier l'image'"</button>
+                  <input
+                     type="file"
+                     id="image"
+                     name="image"
+                     accept=".jpg,.jpeg,.png,.gif"
+                     onChange={(e) => setSelectedImage(e.target.files[0])}
+                  />
+               </div>
+
+               {selectedImage ? (
+                  <img
+                     src={window.URL.createObjectURL(selectedImage)}
+                     alt="Fichier sélectionner"
+                  />
+               ) : (
+                  <img src={postImage} />
+               )}
+               {selectedImage ? (
+                  <div
+                     className="deleteImage"
+                     onClick={() => setSelectedImage(null)}
+                  >
+                     <FontAwesomeIcon icon="xmark" />
+                  </div>
+               ) : null}
+            </div>
+         );
+      } else {
+         if (postImage != null) {
+            return (
+               <div className="post__boxImage">
+                  <img src={postImage} />
+               </div>
+            );
+         }
+      }
+   };
    return (
       <>
          <li className="post">
@@ -147,11 +199,8 @@ const Post = ({ post, user, functionGetData }) => {
                   ></textarea>
                </div>
             )}
-            {post.image_url ? (
-               <div className="post__boxImage">
-                  <img src={post.image_url} />
-               </div>
-            ) : null}
+            <ImageDisplay />
+
             <LikesBar
                post={post}
                user={user}

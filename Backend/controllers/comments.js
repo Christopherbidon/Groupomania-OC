@@ -40,6 +40,7 @@ exports.modifyComment = async (req, res, next) => {
          ownerId,
       ])
       .then((comment) => {
+         console.log(comment.rows[0]);
          if (!comment.rows[0]) {
             return res.status(404).json({
                error: "Commentaire non trouvé !",
@@ -54,20 +55,20 @@ exports.modifyComment = async (req, res, next) => {
             });
          }
          pool
-            .query("UPDATE comments set content = $1, WHERE post_id = $2", [
+            .query("UPDATE comments set content = $1 WHERE comment_id = $2", [
                content,
                commentId,
             ])
-            .then(() =>
-               res.status(200).json({ message: "Commentaire mis à jour" })
-            )
+            .then(() => {
+               res.status(200).json({ message: "Commentaire mis à jour" });
+            })
             .catch((err) =>
                res.status(400).json({
                   message: "Impossible de mettre à jour le commentaire" + err,
                })
             );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("coucou" + err));
 };
 
 exports.deleteComment = async (req, res, next) => {

@@ -32,20 +32,20 @@
             line-height: 30px;
          }
       }
-      .preview {
-         display: flex;
-         max-height: 50px;
-         gap: 20px;
-         align-items: center;
-         padding: 5px;
-         background-color: $primaryBackgroundColor;
-         color: $secondaryTextColor;
-         border: 2px solid black;
-         margin: 10px 0;
-         img {
-            height: 100%;
-         }
-      }
+   }
+}
+.preview {
+   display: flex;
+   max-height: 50px;
+   gap: 20px;
+   align-items: center;
+   padding: 5px;
+   background-color: $primaryBackgroundColor;
+   color: $secondaryTextColor;
+   border: 2px solid black;
+   margin: 10px 0;
+   img {
+      height: 100%;
    }
 }
 
