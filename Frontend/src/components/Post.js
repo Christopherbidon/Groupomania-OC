@@ -21,6 +21,9 @@ const Post = ({ post, user, functionGetData }) => {
    const [selectedImage, setSelectedImage] = useState(null);
    const [textImage, setTextImage] = useState("");
 
+   /***********************************************************/
+   /* Permet de récupérer les données su propriétaire du post */
+   /***********************************************************/
    useEffect(() => {
       axios
          .get(`http://localhost:4000/users/${post.owner_id}`, {
@@ -39,6 +42,9 @@ const Post = ({ post, user, functionGetData }) => {
       }, 6000);
    };
 
+   /****************************************/
+   /* Remet les states à leur état initial */
+   /****************************************/
    const handleCancel = () => {
       setOnUpdatePost(false);
       setNewContent(post.content);
@@ -46,14 +52,19 @@ const Post = ({ post, user, functionGetData }) => {
       setPostImage(post.image_url);
    };
 
+   /***************************************************************************************************/
+   /* Fonction qui met à jour les donnée après une modification de post et qui les envoies au backend */
+   /***************************************************************************************************/
    const handleUpdate = async () => {
       const data = new FormData();
       data.append("content", newContent);
+
       if (selectedImage != null) {
          data.append("image", selectedImage);
-      } else {
-         data.append("imageUrl", post.image_url);
+      } else if (postImage != null) {
+         data.append("imageUrl", postImage);
       }
+
       await axios
          .put(`http://localhost:4000/posts/${post.post_id}`, data, {
             headers: { Authorization: `beared ${user.token}` },
@@ -64,6 +75,10 @@ const Post = ({ post, user, functionGetData }) => {
                setValuePopup("valid");
                popupTimeOut();
                setOnUpdatePost(false);
+               if (selectedImage) {
+                  setPostImage(window.URL.createObjectURL(selectedImage));
+                  setSelectedImage(null);
+               }
             }
             functionGetData();
          })
@@ -72,6 +87,9 @@ const Post = ({ post, user, functionGetData }) => {
          });
    };
 
+   /***********************************/
+   /* Fonction de suppression de post */
+   /***********************************/
    const handleDelete = async () => {
       await axios
          .delete(`http://localhost:4000/posts/${post.post_id}`, {
@@ -87,19 +105,30 @@ const Post = ({ post, user, functionGetData }) => {
          });
    };
 
+   /*********************************************************************/
+   /* Fonction d'affichage de l'image lors de la modification d'un post */
+   /*********************************************************************/
    const ImageDisplay = () => {
-      console.log(selectedImage);
       if (onUpdatePost) {
          return (
             <div className="previewUpdatePost">
                <div className="containerInputFile">
-                  <button className="btnUploadFile">"Modifier l'image'"</button>
+                  {postImage || selectedImage ? (
+                     <button className="btnUploadFile">Modifier l'image</button>
+                  ) : (
+                     <button className="btnUploadFile">
+                        Ajouter une image
+                     </button>
+                  )}
                   <input
                      type="file"
                      id="image"
                      name="image"
                      accept=".jpg,.jpeg,.png,.gif"
-                     onChange={(e) => setSelectedImage(e.target.files[0])}
+                     onChange={(e) => {
+                        setPostImage(null);
+                        setSelectedImage(e.target.files[0]);
+                     }}
                   />
                </div>
 
@@ -108,13 +137,21 @@ const Post = ({ post, user, functionGetData }) => {
                      src={window.URL.createObjectURL(selectedImage)}
                      alt="Fichier sélectionner"
                   />
-               ) : (
-                  <img src={postImage} />
-               )}
+               ) : null}
+               {postImage ? <img src={postImage} /> : null}
+
                {selectedImage ? (
                   <div
                      className="deleteImage"
                      onClick={() => setSelectedImage(null)}
+                  >
+                     <FontAwesomeIcon icon="xmark" />
+                  </div>
+               ) : null}
+               {postImage ? (
+                  <div
+                     className="deleteImage"
+                     onClick={() => setPostImage(null)}
                   >
                      <FontAwesomeIcon icon="xmark" />
                   </div>

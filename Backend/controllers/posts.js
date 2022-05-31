@@ -98,6 +98,7 @@ exports.deletePost = async (req, res, next) => {
             if (post.rows[0].likes != 0) {
                pool.query("DELETE FROM likes WHERE post_id = $1", [id]);
             }
+            pool.query("DELETE FROM comments WHERE post_id = $1", [id]);
             pool.query("DELETE FROM posts WHERE post_id = $1", [id]);
 
             return res.status(200).json({ message: "Post et like supprimé" });

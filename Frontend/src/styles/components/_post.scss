@@ -15,10 +15,13 @@
    border-radius: 5px;
    background-color: $secondaryBackgroundColor;
    &__boxImage {
-      min-width: 500px;
+      height: 300px;
       overflow: hidden;
       align-self: center;
       margin: 0 0 20px 0;
+      img {
+         height: 100%;
+      }
    }
    &__header {
       display: flex;
