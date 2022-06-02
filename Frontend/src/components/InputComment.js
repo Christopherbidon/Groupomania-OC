@@ -6,7 +6,12 @@ import axios from "axios";
 
 library.add(fas);
 
-const InputComment = ({ postId, user, functionGetCommentData }) => {
+const InputComment = ({
+   postId,
+   user,
+   functionGetCommentData,
+   functionNewPopup,
+}) => {
    const [content, setContent] = useState("");
 
    const handleSubmitComment = async (e) => {
@@ -22,14 +27,7 @@ const InputComment = ({ postId, user, functionGetCommentData }) => {
             }
          )
          .then((res) => {
-            /*if (res.status == 201) {
-               handleResetImage();
-               setContent("");
-               setMessagePopup("Post créer avec succès !");
-               setValuePopup("valid");
-               popupTimeOut();
-            }*/
-            console.log(res);
+            functionNewPopup(res.data.message, "valid");
             functionGetCommentData();
             setContent("");
          })

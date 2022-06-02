@@ -29,7 +29,9 @@ exports.signupUser = (req, res, next) => {
                "INSERT INTO users (email, password, name, firstname) VALUES ($1, $2, $3, $4)",
                [userInfo.email, hash, userInfo.name, userInfo.firstname]
             )
-            .then(() => res.status(201).json({ message: "Utilisateur créé" }))
+            .then(() =>
+               res.status(201).json({ message: "Utilisateur créé avec succès" })
+            )
             .catch((err) => res.status(400).json({ err }));
       })
       .catch((err) => res.status(500).json({ err }));
@@ -45,7 +47,7 @@ exports.loginUser = (req, res, next) => {
          if (!user) {
             return res
                .status(401)
-               .json({ error: "Adresse e-mail incorrect !" });
+               .json({ message: "Adresse e-mail incorrect !" });
          }
          bcrypt
             .compare(req.body.password, user.password)
@@ -53,7 +55,7 @@ exports.loginUser = (req, res, next) => {
                if (!valid) {
                   return res
                      .status(401)
-                     .json({ error: "Mot de passe incorrect !" });
+                     .json({ message: "Mot de passe incorrect !" });
                }
                res.status(200).json({
                   userId: user.user_id,

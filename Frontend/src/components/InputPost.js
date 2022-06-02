@@ -1,56 +1,24 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import Popup from "./Popup";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(fas);
 
-const InputPost = ({ functionGetData }) => {
+const InputPost = ({ user, functionGetData, functionNewPopup }) => {
    const [selectedImage, setSelectedImage] = useState();
+   const [content, setContent] = useState("");
    const [textImage, setTextImage] = useState(
       "Veuillez sélectionner une image"
    );
-   const [content, setContent] = useState("");
-   const [user, setUser] = useState(null);
-   const [messagePopup, setMessagePopup] = useState("");
-   const [valuePopup, setValuePopup] = useState("");
-   const [popup, setPopup] = useState(false);
 
-   useEffect(() => {
-      setUser(JSON.parse(sessionStorage.getItem("user")));
-   }, []);
-
-   const popupTimeOut = () => {
-      setPopup(true);
-      const popupTime = setInterval(() => {
-         setPopup(false);
-         clearInterval(popupTime);
-      }, 6000);
-   };
-
-   const returnFileSize = (number) => {
-      if (number < 1024) {
-         return number + " octets";
-      } else if (number >= 1024 && number < 1048576) {
-         return (number / 1024).toFixed(1) + " Ko";
-      } else if (number >= 1048576) {
-         return (number / 1048576).toFixed(1) + " Mo";
-      }
-   };
    const updateImageDisplay = (e) => {
       const file = e.target.files[0];
       if (file.length === 0) {
          console.log("no file");
       } else {
-         setTextImage(
-            `Nom du Fichier : "` +
-               file.name +
-               `", taille du fichier ` +
-               returnFileSize(file.size) +
-               "."
-         );
+         setTextImage(`Nom du Fichier : "` + file.name + ".");
          setSelectedImage(file);
       }
    };
@@ -67,9 +35,7 @@ const InputPost = ({ functionGetData }) => {
             if (res.status == 201) {
                handleResetImage();
                setContent("");
-               setMessagePopup("Post créer avec succès !");
-               setValuePopup("valid");
-               popupTimeOut();
+               functionNewPopup(res.data.message, "valid");
             }
             functionGetData();
          })
@@ -84,7 +50,6 @@ const InputPost = ({ functionGetData }) => {
    };
    return (
       <div className="containerInputPost">
-         {popup ? <Popup value={valuePopup} popupText={messagePopup} /> : null}
          <form
             className="containerInputPost__form"
             onSubmit={(e) => handleSubmit(e)}

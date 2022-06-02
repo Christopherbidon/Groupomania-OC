@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import InputComment from "./InputComment";
 
-const AllComments = ({ postId, user }) => {
+const AllComments = ({ postId, user, functionNewPopup }) => {
    const [allCommentsData, setAllCommentsData] = useState([]);
 
    const getAllComments = async () => {
@@ -32,6 +32,7 @@ const AllComments = ({ postId, user }) => {
                      comment={comment}
                      user={user}
                      functionGetCommentData={getAllComments}
+                     functionNewPopup={functionNewPopup}
                   />
                ))}
          </ul>
@@ -39,6 +40,7 @@ const AllComments = ({ postId, user }) => {
             postId={postId}
             user={user}
             functionGetCommentData={getAllComments}
+            functionNewPopup={functionNewPopup}
          />
       </>
    );

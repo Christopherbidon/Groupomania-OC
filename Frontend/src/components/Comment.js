@@ -1,7 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Comment = ({ comment, user, functionGetCommentData }) => {
+const Comment = ({
+   comment,
+   user,
+   functionGetCommentData,
+   functionNewPopup,
+}) => {
    const [ownerData, setOwnerData] = useState("");
    const [isActive, setIsActive] = useState(false);
    const [onUpdateComment, setOnUpdateComment] = useState(false);
@@ -15,7 +20,6 @@ const Comment = ({ comment, user, functionGetCommentData }) => {
             },
          })
          .then((res) => setOwnerData(res.data));
-      console.log(comment);
    }, []);
 
    const handleClick = () => {
@@ -23,6 +27,7 @@ const Comment = ({ comment, user, functionGetCommentData }) => {
          setIsActive(false);
          if (onUpdateComment) {
             setOnUpdateComment(false);
+            setCommentContent(comment.content);
          }
       } else {
          setIsActive(true);
@@ -37,6 +42,7 @@ const Comment = ({ comment, user, functionGetCommentData }) => {
          .then((res) => {
             console.log(res);
             if (res.status == 200) {
+               functionNewPopup(res.data.message, "valid");
                functionGetCommentData();
             }
          })
@@ -53,9 +59,9 @@ const Comment = ({ comment, user, functionGetCommentData }) => {
                headers: { Authorization: `beared ${user.token}` },
             })
             .then((res) => {
-               console.log(res.data.message);
+               functionNewPopup(res.data.message, "valid");
                setOnUpdateComment(false);
-               setIsActive(true);
+               setIsActive(false);
             })
             .catch((err) => {
                console.log(err);
@@ -71,11 +77,21 @@ const Comment = ({ comment, user, functionGetCommentData }) => {
          {onUpdateComment ? (
             <textarea
                onChange={(e) => setCommentContent(e.target.value)}
-               className="comment__content"
+               className={
+                  isActive
+                     ? "comment__content comment__content__activeEdit"
+                     : "comment__content"
+               }
                value={commentContent}
             ></textarea>
          ) : (
-            <p className="comment__content">
+            <p
+               className={
+                  isActive
+                     ? "comment__content comment__content__activeEdit"
+                     : "comment__content"
+               }
+            >
                <span className="comment__ownerText">
                   {ownerData.name + " " + ownerData.firstname}
                </span>

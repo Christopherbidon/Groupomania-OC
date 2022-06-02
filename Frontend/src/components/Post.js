@@ -5,12 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import LikesBar from "./LikesBar";
-import InputComment from "./InputComment";
 import AllComments from "./AllComments";
 
 library.add(fas);
 
-const Post = ({ post, user, functionGetData }) => {
+const Post = ({ post, user, functionGetData, functionNewPopup }) => {
    const [messagePopup, setMessagePopup] = useState("");
    const [valuePopup, setValuePopup] = useState("");
    const [popup, setPopup] = useState(false);
@@ -19,7 +18,6 @@ const Post = ({ post, user, functionGetData }) => {
    const [ownerData, setOwnerData] = useState("");
    const [postImage, setPostImage] = useState(post.image_url);
    const [selectedImage, setSelectedImage] = useState(null);
-   const [textImage, setTextImage] = useState("");
 
    /***********************************************************/
    /* Permet de récupérer les données su propriétaire du post */
@@ -71,9 +69,7 @@ const Post = ({ post, user, functionGetData }) => {
          })
          .then((res) => {
             if (res.status == 200) {
-               setMessagePopup("Post mis à jour avec succès !");
-               setValuePopup("valid");
-               popupTimeOut();
+               functionNewPopup(res.data.message, "valid");
                setOnUpdatePost(false);
                if (selectedImage) {
                   setPostImage(window.URL.createObjectURL(selectedImage));
@@ -243,7 +239,11 @@ const Post = ({ post, user, functionGetData }) => {
                user={user}
                functionGetData={functionGetData}
             />
-            <AllComments postId={post.post_id} user={user} />
+            <AllComments
+               functionNewPopup={functionNewPopup}
+               postId={post.post_id}
+               user={user}
+            />
          </li>
       </>
    );

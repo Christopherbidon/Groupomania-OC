@@ -1,0 +1,102 @@
+.popupProfileBackground {
+   height: 100vh;
+   width: 100vw;
+   position: fixed;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 5;
+   background-color: rgba(0, 0, 0, 0.8);
+}
+.popupProfile {
+   height: 80vh;
+   width: 80%;
+   max-width: 1000px;
+   background-color: $secondaryBackgroundColor;
+   position: relative;
+   border-radius: 10px;
+   z-index: 10;
+   padding: 0 30px 50px 30px;
+}
+.popupProfileContainer {
+   height: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   & > p {
+      color: $primaryTextColor;
+   }
+   .crossPopupProfile {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      &::after {
+         content: "";
+         position: absolute;
+         height: 6px;
+         width: 40px;
+         top: 12px;
+         left: -5px;
+         border-radius: 3px;
+         background-color: $primaryTextColor;
+         transform: rotate(45deg);
+      }
+      &::before {
+         content: "";
+         position: absolute;
+         height: 6px;
+         width: 40px;
+         top: 12px;
+         left: -5px;
+         border-radius: 3px;
+         background-color: $primaryTextColor;
+         transform: rotate(-45deg);
+      }
+   }
+}
+
+.avatarContainer {
+   margin-top: 20px;
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100px;
+   width: 100px;
+   overflow: hidden;
+   border-radius: 50%;
+   img {
+      position: absolute;
+      height: 100%;
+   }
+   .avatarModifier {
+      &__edit {
+         color: $editColor;
+      }
+      &__cancel {
+         color: $deleteColor;
+      }
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $editColor;
+      font-size: 22px;
+      background-color: rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+   }
+   input[type="file"] {
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      cursor: pointer;
+   }
+}
+
+.buttonAvatarChange {
+}

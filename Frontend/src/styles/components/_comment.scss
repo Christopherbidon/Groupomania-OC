@@ -17,6 +17,10 @@
    margin: 5px 0px;
    gap: 5px;
    color: $primaryTextColor;
+   &__activeEdit {
+      position: relative;
+      z-index: 15;
+   }
    &__ownerText {
       font-weight: bold;
    }
@@ -27,6 +31,12 @@
       border-radius: 18px;
       padding: 8px 12px;
       line-height: 18px;
+      color: $primaryTextColor;
+      resize: none;
+      &__activeEdit {
+         position: relative;
+         z-index: 15;
+      }
    }
    &__avatarBox {
       height: 32px;

@@ -1,25 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import Popup from "./Popup";
 
 const API_URL = "http://localhost:4000/users/";
-const SignUp = () => {
+const SignUp = ({ functionNewPopup, functionSetIsSignup }) => {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [secondPassword, setSecondPassword] = useState("");
    const [name, setName] = useState("");
    const [firstname, setFirstname] = useState("");
-   const [messagePopup, setMessagePopup] = useState("");
-   const [valuePopup, setValuePopup] = useState("");
-   const [popup, setPopup] = useState(false);
-
-   const popupTimeOut = () => {
-      setPopup(true);
-      const popupTime = setInterval(() => {
-         setPopup(false);
-         clearInterval(popupTime);
-      }, 6000);
-   };
 
    const handleSignup = (e) => {
       e.preventDefault();
@@ -32,31 +20,25 @@ const SignUp = () => {
                firstname,
             })
             .then((res) => {
-               console.log(res);
-               setMessagePopup("Utilisateur créer avec succès !");
-               setValuePopup("valid");
-               popupTimeOut();
+               functionNewPopup(res.data.message, "valid");
+               functionSetIsSignup(false);
             })
             .catch((err) => {
                const codeError = err.response.data.err.code;
-               console.log(codeError);
                if (codeError == 23505) {
-                  setMessagePopup("Cette adresse e-mail est deja utilisée");
-                  setValuePopup("error");
-                  popupTimeOut();
-                  console.log("ok");
+                  functionNewPopup(
+                     "Cette adresse e-mail est deja utilisée",
+                     "error"
+                  );
                }
             });
       } else {
-         setMessagePopup("Les mots de passes ne sont pas identique");
-         setValuePopup("error");
-         popupTimeOut();
+         functionNewPopup("Les mots de passes ne sont pas identique", "error");
       }
    };
 
    return (
       <div className="form form__signup">
-         {popup ? <Popup value={valuePopup} popupText={messagePopup} /> : null}
          <form onSubmit={(e) => handleSignup(e)}>
             <input
                onChange={(e) => setName(e.target.value)}

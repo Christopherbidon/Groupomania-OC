@@ -62,7 +62,9 @@ exports.modifyPost = async (req, res, next) => {
                "UPDATE posts set content = $1, image_url = $2 WHERE post_id = $3",
                [content, imageUrl, postId]
             )
-            .then(res.status(200).json({ message: "Post mis à jour" }))
+            .then(
+               res.status(200).json({ message: "Post mis à jour avec succès" })
+            )
             .catch((err) => console.error(err));
       })
       .catch((err) => console.log(err));

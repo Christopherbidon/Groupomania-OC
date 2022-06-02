@@ -3,7 +3,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import logo from "../assets/images/icon-left-font-monochrome-white.png";
 
-const Connexion = () => {
+const Connexion = ({ functionUpdateDataUser, functionNewPopup }) => {
    const [isSignUp, setIsSignUp] = useState(false);
    return (
       <div className="containerConnexion">
@@ -26,7 +26,17 @@ const Connexion = () => {
                      S'inscrire
                   </button>
                </div>
-               {isSignUp ? <SignUp /> : <Login />}
+               {isSignUp ? (
+                  <SignUp
+                     functionNewPopup={functionNewPopup}
+                     functionSetIsSignup={setIsSignUp}
+                  />
+               ) : (
+                  <Login
+                     functionUpdateDataUser={functionUpdateDataUser}
+                     functionNewPopup={functionNewPopup}
+                  />
+               )}
             </div>
          </div>
       </div>

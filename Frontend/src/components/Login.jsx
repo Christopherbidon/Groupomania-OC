@@ -4,10 +4,9 @@ import Popup from "./Popup";
 
 const API_URL = "http://localhost:4000/users/";
 
-const Login = () => {
+const Login = ({ functionUpdateDataUser, functionNewPopup }) => {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
-   const [messageError, setMessageError] = useState("");
    const [messagePopup, setMessagePopup] = useState("");
    const [valuePopup, setValuePopup] = useState("");
    const [popup, setPopup] = useState(false);
@@ -27,17 +26,15 @@ const Login = () => {
             email,
             password,
          })
-         .then((response) => {
-            if (response.data.token) {
-               sessionStorage.setItem("user", JSON.stringify(response.data));
-               window.location.reload();
+         .then((res) => {
+            if (res.data.token) {
+               sessionStorage.setItem("user", JSON.stringify(res.data));
+               functionUpdateDataUser();
             }
          })
          .catch((err) => {
             console.log(err);
-            setMessagePopup(err.response.data.error);
-            setValuePopup("error");
-            popupTimeOut();
+            functionNewPopup(err.response.data.message, "error");
          });
    };
 
