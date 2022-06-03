@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Popup from "./Popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -10,9 +9,6 @@ import AllComments from "./AllComments";
 library.add(fas);
 
 const Post = ({ post, user, functionGetData, functionNewPopup }) => {
-   const [messagePopup, setMessagePopup] = useState("");
-   const [valuePopup, setValuePopup] = useState("");
-   const [popup, setPopup] = useState(false);
    const [onUpdatePost, setOnUpdatePost] = useState(false);
    const [newContent, setNewContent] = useState(post.content);
    const [ownerData, setOwnerData] = useState("");
@@ -31,14 +27,6 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
          })
          .then((res) => setOwnerData(res.data));
    }, []);
-
-   const popupTimeOut = () => {
-      setPopup(true);
-      const popupTime = setInterval(() => {
-         setPopup(false);
-         clearInterval(popupTime);
-      }, 6000);
-   };
 
    /****************************************/
    /* Remet les states à leur état initial */
@@ -109,13 +97,13 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
          return (
             <div className="previewUpdatePost">
                <div className="containerInputFile">
-                  {postImage || selectedImage ? (
-                     <button className="btnUploadFile">Modifier l'image</button>
-                  ) : (
-                     <button className="btnUploadFile">
-                        Ajouter une image
-                     </button>
-                  )}
+                  <button className="btnUploadFile">
+                     {selectedImage || postImage ? (
+                        <FontAwesomeIcon icon="fa-solid fa-pencil" />
+                     ) : (
+                        <FontAwesomeIcon icon="fa-solid fa-plus" />
+                     )}
+                  </button>
                   <input
                      type="file"
                      id="image"
@@ -167,9 +155,6 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
    return (
       <>
          <li className="post">
-            {popup ? (
-               <Popup value={valuePopup} popupText={messagePopup} />
-            ) : null}
             <div className="post__header">
                <div className="postOwner">
                   <div className="postOwner__avatar">
@@ -232,6 +217,7 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
                   ></textarea>
                </div>
             )}
+
             <ImageDisplay />
 
             <LikesBar

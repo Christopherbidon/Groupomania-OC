@@ -40,7 +40,6 @@ const Comment = ({
             headers: { Authorization: `beared ${user.token}` },
          })
          .then((res) => {
-            console.log(res);
             if (res.status == 200) {
                functionNewPopup(res.data.message, "valid");
                functionGetCommentData();

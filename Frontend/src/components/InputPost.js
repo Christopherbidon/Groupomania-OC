@@ -7,21 +7,9 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(fas);
 
 const InputPost = ({ user, functionGetData, functionNewPopup }) => {
-   const [selectedImage, setSelectedImage] = useState();
+   const [selectedImage, setSelectedImage] = useState(null);
    const [content, setContent] = useState("");
-   const [textImage, setTextImage] = useState(
-      "Veuillez sélectionner une image"
-   );
 
-   const updateImageDisplay = (e) => {
-      const file = e.target.files[0];
-      if (file.length === 0) {
-         console.log("no file");
-      } else {
-         setTextImage(`Nom du Fichier : "` + file.name + ".");
-         setSelectedImage(file);
-      }
-   };
    const handleSubmit = async (e) => {
       e.preventDefault();
       const formData = new FormData();
@@ -45,7 +33,6 @@ const InputPost = ({ user, functionGetData, functionNewPopup }) => {
    };
 
    const handleResetImage = () => {
-      setTextImage("Veuillez sélectionner une image");
       setSelectedImage(null);
    };
    return (
@@ -63,32 +50,33 @@ const InputPost = ({ user, functionGetData, functionNewPopup }) => {
             <div className="preview">
                <div className="containerInputFile">
                   <button className="btnUploadFile">
-                     {selectedImage
-                        ? "Modifier le fichier"
-                        : "Choisir le fichier"}
+                     {selectedImage ? (
+                        <FontAwesomeIcon icon="fa-solid fa-pencil" />
+                     ) : (
+                        <FontAwesomeIcon icon="fa-solid fa-plus" />
+                     )}
                   </button>
                   <input
                      type="file"
                      id="image"
                      name="image"
                      accept=".jpg,.jpeg,.png,.gif"
-                     onChange={(e) => updateImageDisplay(e)}
+                     onChange={(e) => setSelectedImage(e.target.files[0])}
                   />
                </div>
                {selectedImage ? (
-                  <img
-                     src={window.URL.createObjectURL(selectedImage)}
-                     alt="Fichier sélectionner"
-                  />
-               ) : null}
-               <p>{textImage}</p>
-               {selectedImage ? (
-                  <div
-                     className="deleteImage"
-                     onClick={() => handleResetImage()}
-                  >
-                     <FontAwesomeIcon icon="xmark" />
-                  </div>
+                  <>
+                     <img
+                        src={window.URL.createObjectURL(selectedImage)}
+                        alt="Fichier sélectionner"
+                     />
+                     <div
+                        className="deleteImage"
+                        onClick={() => handleResetImage()}
+                     >
+                        <FontAwesomeIcon icon="xmark" />
+                     </div>
+                  </>
                ) : null}
             </div>
             <input

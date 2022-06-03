@@ -12,6 +12,7 @@
    border-radius: 2px;
    box-shadow: 1px 0px 15px 5px rgba(0, 0, 0, 0.2);
    animation: 5s popupTransition;
+   z-index: 20;
    &__iconContainer {
       height: 30px;
       width: 30px;
