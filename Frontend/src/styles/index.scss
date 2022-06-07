@@ -3,6 +3,7 @@
 @import "./utils/settings";
 
 @import "./pages/connexion";
+
 @import "./components/formulaireConnexion";
 @import "./components/formulairePost";
 @import "./components//formulaireComment";
@@ -13,4 +14,5 @@
 @import "./components/likesBar";
 @import "./components/comment";
 @import "./components/profile";
-@import "./components//ChangePassword";
+@import "./components/changePassword";
+@import "./components/changeIdentity";

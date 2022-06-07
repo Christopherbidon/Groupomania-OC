@@ -159,7 +159,14 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
             <div className="post__header">
                <div className="postOwner">
                   <div className="postOwner__avatar">
-                     <img src={ownerData.avatar_url} alt="" />
+                     <img
+                        src={
+                           user.userId == post.owner_id
+                              ? user.avatarUrl
+                              : ownerData.avatar_url
+                        }
+                        alt=""
+                     />
                   </div>
                   <p className="postOwner__text">
                      {`Créer par ` +

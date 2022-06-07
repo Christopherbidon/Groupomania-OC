@@ -16,7 +16,7 @@ const ChangePassword = ({ user, functionNewPopup }) => {
          );
          return;
       }
-      console.log(data);
+      console.log(user);
       axios
          .put("http://localhost:4000/users/modifyPassword", data, {
             headers: {

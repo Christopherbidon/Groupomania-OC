@@ -4,6 +4,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import ChangePassword from "./ChangePassword";
 import axios from "axios";
+import ChangeIdentity from "./ChangeIdentity";
 
 library.add(fas);
 
@@ -85,6 +86,7 @@ const Profile = ({
                </button>
             </div>
          ) : null}
+         <ChangeIdentity user={user} functionNewPopup={functionNewPopup} />
          <ChangePassword user={user} functionNewPopup={functionNewPopup} />
       </div>
    );

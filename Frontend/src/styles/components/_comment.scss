@@ -33,6 +33,9 @@
       line-height: 18px;
       color: $primaryTextColor;
       resize: none;
+      &:focus-visible {
+         outline: none;
+      }
       &__activeEdit {
          position: relative;
          z-index: 15;

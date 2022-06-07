@@ -14,6 +14,8 @@ router.post("/login", userCtrl.loginUser);
 router.put("/modifyPassword", auth, userCtrl.modifyUserPassword);
 /*Route pour modifier l'avatar d'un utilisateur */
 router.put("/modifyAvatar", auth, multer, userCtrl.modifyUserAvatar);
+/*Route pour modifier l'identité d'un utilisateur */
+router.put("/modifyIdentity", auth, userCtrl.modifyIdentity);
 /* Route pour supprimer un utilisateur */
 router.delete("/delete", auth, userCtrl.deleteUser);
 

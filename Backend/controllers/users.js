@@ -130,15 +130,32 @@ exports.modifyUserAvatar = async (req, res, next) => {
                userId,
             ])
             .then(() =>
-               res
-                  .status(200)
-                  .json({
-                     message: "Avatar mis à jour",
-                     avatar_url: avatar_url,
-                  })
+               res.status(200).json({
+                  message: "Avatar mis à jour",
+                  avatar_url: avatar_url,
+               })
             )
             .catch((err) => res.status(500).json({ err }));
       });
+};
+
+exports.modifyIdentity = async (req, res, next) => {
+   const userId = req.auth.userId;
+   const newName = req.body.name;
+   const newFirstname = req.body.firstname;
+
+   pool
+      .query("UPDATE users set name = $1, firstname = $2 WHERE user_id = $3", [
+         newName,
+         newFirstname,
+         userId,
+      ])
+      .then(() =>
+         res.status(200).json({
+            message: "Identité mis à jour",
+         })
+      )
+      .catch((err) => res.status(500).json({ err }));
 };
 
 exports.deleteUser = async (req, res, next) => {
