@@ -9,6 +9,7 @@ input[type="submit"] {
    box-shadow: 1px 0px 15px 5px rgba(0, 0, 0, 0.2);
    padding: 5px 20px;
    border-radius: 2px;
+   font-weight: bold;
    &:hover {
       box-shadow: 1px 0px 15px 10px rgba(0, 0, 0, 0.2);
       scale: 1.01;
@@ -24,32 +25,26 @@ input[type="submit"] {
    border-radius: 2px;
    cursor: pointer;
    &__update {
+      @include flexcenter;
       background-color: $editColor;
       height: 25px;
       width: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
    }
    &__cancel {
       background-color: $deleteColor;
    }
    &__delete {
+      @include flexcenter;
       background-color: $deleteColor;
       height: 25px;
       width: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
    }
 }
 
 .inputComment__btnSubmit {
+   @include flexcenter;
    height: 34px;
    width: 34px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
    border-radius: 50%;
    border: none;
    &:hover {

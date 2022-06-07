@@ -1,0 +1,12 @@
+@mixin flexcenter {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+@mixin min-media($_key) {
+   @media screen and (min-width: map-get($breakpoints, $_key)) {
+      & {
+         @content;
+      }
+   }
+}

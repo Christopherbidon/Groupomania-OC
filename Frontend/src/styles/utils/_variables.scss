@@ -14,3 +14,9 @@ $tertiaryTextColor: #e3e5ea;
 $editColor: #e4e6eb;
 $deleteColor: #fa5454;
 $validColor: #38c500;
+
+$breakpoints: (
+   "phone": 360px,
+   "tablet": 760px,
+   "desktop": 1024px,
+);
