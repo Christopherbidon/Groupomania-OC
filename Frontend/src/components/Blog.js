@@ -4,7 +4,7 @@ import Header from "./Header";
 import InputPost from "./InputPost";
 import Post from "./Post";
 
-const Blog = ({ functionNewPopup, user }) => {
+const Blog = ({ functionUpdateDataUser, functionNewPopup, user }) => {
    const [postsData, setPostsData] = useState([]);
 
    const getData = async () => {
@@ -27,7 +27,11 @@ const Blog = ({ functionNewPopup, user }) => {
 
    return (
       <>
-         <Header user={user} functionNewPopup={functionNewPopup} />
+         <Header
+            functionUpdateDataUser={functionUpdateDataUser}
+            user={user}
+            functionNewPopup={functionNewPopup}
+         />
          <InputPost
             user={user}
             functionGetData={getData}

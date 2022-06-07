@@ -36,7 +36,11 @@ const App = () => {
          {popup ? <Popup value={valuePopup} popupText={messagePopup} /> : null}
          <div className="main">
             {user ? (
-               <Blog functionNewPopup={newPopup} user={user} />
+               <Blog
+                  functionUpdateDataUser={getDataUser}
+                  functionNewPopup={newPopup}
+                  user={user}
+               />
             ) : (
                <Connexion
                   functionUpdateDataUser={getDataUser}

@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db-config");
+const fs = require("fs");
 
 /* Controleur pour récupérer un utilisateur */
 exports.getUser = (req, res, next) => {
@@ -95,7 +96,11 @@ exports.modifyUserPassword = (req, res, next) => {
                            "UPDATE users SET password = $1 WHERE user_id = $2",
                            [hash, userId]
                         )
-                        .then(() => res.status(200).json("Compte mis à jour"))
+                        .then(() =>
+                           res
+                              .status(200)
+                              .json({ message: "Compte mis à jour" })
+                        )
                         .catch((err) => res.status(500).json({ err }));
                   })
                   .catch((err) => res.status(500).json({ err }));
@@ -105,24 +110,52 @@ exports.modifyUserPassword = (req, res, next) => {
       .catch((err) => res.status(500).json({ err }));
 };
 
-exports.modifyUserAvatar = (req, res, next) => {
+exports.modifyUserAvatar = async (req, res, next) => {
    const userId = req.auth.userId;
    const avatar_url = req.file
       ? `${req.protocol}://${req.get("host")}/medias/${req.file.filename}`
       : null;
-   pool
-      .query("UPDATE users SET avatar_url = $1 WHERE user_id = $2", [
-         avatar_url,
-         userId,
-      ])
-      .then(() => res.status(200).json({ message: "Avatar mis à jour" }))
-      .catch((err) => res.status(500).json({ err }));
+   await pool
+      .query("SELECT * FROM users WHERE user_id = $1", [userId])
+      .then((user) => {
+         const oldAvatarUrl = user.rows[0].avatar_url;
+         if (oldAvatarUrl.search(/defaultMedia/) < 1) {
+            fs.unlink(`medias/${oldAvatarUrl.split("/medias/")[1]}`, (err) => {
+               if (err) console.log(err);
+            });
+         }
+         pool
+            .query("UPDATE users SET avatar_url = $1 WHERE user_id = $2", [
+               avatar_url,
+               userId,
+            ])
+            .then(() =>
+               res
+                  .status(200)
+                  .json({
+                     message: "Avatar mis à jour",
+                     avatar_url: avatar_url,
+                  })
+            )
+            .catch((err) => res.status(500).json({ err }));
+      });
 };
 
-exports.deleteUser = (req, res, next) => {
+exports.deleteUser = async (req, res, next) => {
    const userId = req.auth.userId;
-   pool
-      .query("DELETE FROM users WHERE user_id = $1", [userId])
-      .then(() => res.status(200).json("Utilisateur supprimer !"))
-      .catch((err) => res.status(500).json({ err }));
+
+   await pool
+      .query("SELECT * FROM users WHERE user_id = $1", [userId])
+      .then((user) => {
+         const avatarUrl = user.rows[0].avatar_url;
+         if (avatarUrl.search(/defaultMedia/) < 1) {
+            fs.unlink(`medias/${avatarUrl.split("/medias/")[1]}`, (err) => {
+               if (err) console.log(err);
+            });
+         }
+         pool
+            .query("DELETE FROM users WHERE user_id = $1", [userId])
+            .then(() => res.status(200).json("Utilisateur supprimer !"))
+            .catch((err) => res.status(500).json({ err }));
+      });
 };

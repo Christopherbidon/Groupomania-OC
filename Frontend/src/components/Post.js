@@ -48,8 +48,9 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
       if (selectedImage != null) {
          data.append("image", selectedImage);
       } else if (postImage != null) {
-         data.append("imageUrl", postImage);
+         data.append("imageUrl", post.image_url);
       }
+      console.log(selectedImage, postImage);
 
       await axios
          .put(`http://localhost:4000/posts/${post.post_id}`, data, {

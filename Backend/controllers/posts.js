@@ -44,6 +44,18 @@ exports.modifyPost = async (req, res, next) => {
    await pool
       .query("SELECT * FROM posts WHERE post_id = $1", [postId])
       .then((post) => {
+         const oldImageUrl = post.rows[0].image_url;
+         console.log(oldImageUrl);
+         if (oldImageUrl != null) {
+            if (req.file || req.body.imageUrl == null) {
+               fs.unlink(
+                  `medias/${oldImageUrl.split("/medias/")[1]}`,
+                  (err) => {
+                     if (err) console.log(err);
+                  }
+               );
+            }
+         }
          if (!post.rows[0]) {
             return res.status(404).json({
                error: "Post non trouvé !",

@@ -13,6 +13,7 @@ const AllPosts = ({ user }) => {
             },
          })
          .then((res) => {
+            setPostsData(null);
             setPostsData(res.data);
          })
          .catch((err) => console.log(err));

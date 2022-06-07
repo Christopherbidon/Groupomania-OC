@@ -2,11 +2,43 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import ChangePassword from "./ChangePassword";
+import axios from "axios";
 
 library.add(fas);
 
-const Profile = ({ user, functionHandleClickProfile }) => {
+const Profile = ({
+   functionUpdateDataUser,
+   user,
+   functionHandleClickProfile,
+   functionNewPopup,
+}) => {
    const [selectedImage, setSelectedImage] = useState(null);
+   const [avatar, setAvatar] = useState(user.avatarUrl);
+
+   const handleUpdate = async (e) => {
+      e.preventDefault();
+      const data = new FormData();
+      data.append("image", selectedImage);
+
+      await axios
+         .put(`http://localhost:4000/users/modifyAvatar`, data, {
+            headers: { Authorization: `beared ${user.token}` },
+         })
+         .then((res) => {
+            user.avatarUrl = res.data.avatar_url;
+            functionNewPopup(res.data.message, "valid");
+            setAvatar(window.URL.createObjectURL(selectedImage));
+            setSelectedImage(null);
+            console.log(user);
+            sessionStorage.setItem("user", JSON.stringify(user));
+            functionUpdateDataUser();
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   };
+
    return (
       <div className="popupProfile">
          <div className="popupProfileContainer">
@@ -19,7 +51,11 @@ const Profile = ({ user, functionHandleClickProfile }) => {
          </div>
          <div className="avatarContainer">
             <img
-               src={selectedImage ? selectedImage : user.avatarUrl}
+               src={
+                  selectedImage
+                     ? window.URL.createObjectURL(selectedImage)
+                     : avatar
+               }
                alt="Photo de profil"
             />
             {selectedImage ? null : (
@@ -32,18 +68,14 @@ const Profile = ({ user, functionHandleClickProfile }) => {
                      id="image"
                      name="image"
                      accept=".jpg,.jpeg,.png,.gif"
-                     onChange={(e) =>
-                        setSelectedImage(
-                           window.URL.createObjectURL(e.target.files[0])
-                        )
-                     }
+                     onChange={(e) => setSelectedImage(e.target.files[0])}
                   />
                </>
             )}
          </div>
          {selectedImage ? (
             <div className="buttonAvatarChange">
-               <button>Valider</button>
+               <button onClick={(e) => handleUpdate(e)}>Valider</button>
                <button
                   onClick={() => {
                      setSelectedImage(null);
@@ -53,6 +85,7 @@ const Profile = ({ user, functionHandleClickProfile }) => {
                </button>
             </div>
          ) : null}
+         <ChangePassword user={user} functionNewPopup={functionNewPopup} />
       </div>
    );
 };

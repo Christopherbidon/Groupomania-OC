@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/images/icon-left-font-monochrome-white.svg";
 import Profile from "./Profile";
 
-const Header = ({ user }) => {
+const Header = ({ functionUpdateDataUser, user, functionNewPopup }) => {
    const [popupProfile, setPopupProfile] = useState(false);
 
    const handleLogout = () => {
@@ -20,8 +20,10 @@ const Header = ({ user }) => {
             <>
                <div className="popupProfileBackground">
                   <Profile
+                     functionUpdateDataUser={functionUpdateDataUser}
                      user={user}
                      functionHandleClickProfile={handleClickProfile}
+                     functionNewPopup={functionNewPopup}
                   />
                </div>
             </>

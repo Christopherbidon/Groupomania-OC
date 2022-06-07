@@ -15,21 +15,25 @@ const InputPost = ({ user, functionGetData, functionNewPopup }) => {
       const formData = new FormData();
       formData.append("content", content);
       formData.append("image", selectedImage);
-      await axios
-         .post("http://localhost:4000/posts", formData, {
-            headers: { Authorization: `beared ${user.token}` },
-         })
-         .then((res) => {
-            if (res.status == 201) {
-               handleResetImage();
-               setContent("");
-               functionNewPopup(res.data.message, "valid");
-            }
-            functionGetData();
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+      if (content == "" && selectedImage == null) {
+         functionNewPopup("Votre post est vide", "error");
+      } else {
+         await axios
+            .post("http://localhost:4000/posts", formData, {
+               headers: { Authorization: `beared ${user.token}` },
+            })
+            .then((res) => {
+               if (res.status == 201) {
+                  handleResetImage();
+                  setContent("");
+                  functionNewPopup(res.data.message, "valid");
+               }
+               functionGetData();
+            })
+            .catch((err) => {
+               console.log(err);
+            });
+      }
    };
 
    const handleResetImage = () => {
