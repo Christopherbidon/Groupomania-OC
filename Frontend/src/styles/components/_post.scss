@@ -5,6 +5,13 @@
       width: 100%;
       margin-top: 40px;
    }
+   @include max-media("tablet") {
+      width: 100%;
+      border-radius: 0;
+      > ul {
+         margin-top: 0;
+      }
+   }
 }
 
 .post {
@@ -14,6 +21,10 @@
    padding: 20px;
    border-radius: 5px;
    background-color: $secondaryBackgroundColor;
+   @include max-media("tablet") {
+      margin-top: 10px;
+      border-radius: 0;
+   }
    &__boxImage {
       @include flexcenter;
       height: 300px;

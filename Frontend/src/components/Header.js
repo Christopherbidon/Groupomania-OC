@@ -4,6 +4,7 @@ import Profile from "./Profile";
 
 const Header = ({ functionUpdateDataUser, user, functionNewPopup }) => {
    const [popupProfile, setPopupProfile] = useState(false);
+   const [hamburgerMenu, setHamburgerMenu] = useState(false);
 
    const handleLogout = () => {
       sessionStorage.removeItem("user");
@@ -12,6 +13,10 @@ const Header = ({ functionUpdateDataUser, user, functionNewPopup }) => {
 
    const handleClickProfile = () => {
       popupProfile ? setPopupProfile(false) : setPopupProfile(true);
+   };
+
+   const hamburgerMenuClick = () => {
+      hamburgerMenu ? setHamburgerMenu(false) : setHamburgerMenu(true);
    };
 
    return (
@@ -28,6 +33,14 @@ const Header = ({ functionUpdateDataUser, user, functionNewPopup }) => {
                </div>
             </>
          ) : null}
+         <div
+            className={hamburgerMenu ? "hamburgerMenu active" : "hamburgerMenu"}
+            onClick={() => hamburgerMenuClick()}
+         >
+            <span></span>
+            <span></span>
+            <span></span>
+         </div>
          <div className="header__logoContainer">
             <img src={logo} alt="logo de Groupomania" />
          </div>

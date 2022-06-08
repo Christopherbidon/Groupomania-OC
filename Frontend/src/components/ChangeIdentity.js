@@ -41,15 +41,19 @@ const ChangeIdentity = ({ user, functionNewPopup }) => {
    return (
       <div className="changeIdentityContainer">
          <form onSubmit={(e) => handleChangeIdentity(e)}>
+            <label htmlFor="name">Nom :</label>
             <input
                type="text"
+               name="name"
                placeholder="Nouveau Mot de Passe"
                value={name}
                onChange={(e) => setName(e.target.value)}
                required
             />
+            <label htmlFor="firstname">Prénom :</label>
             <input
                type="text"
+               name="firstname"
                placeholder="Retapez votre nouveau Mot de Passe"
                value={firstname}
                onChange={(e) => setFristname(e.target.value)}

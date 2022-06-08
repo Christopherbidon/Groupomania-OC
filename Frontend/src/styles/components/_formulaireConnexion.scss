@@ -73,6 +73,15 @@
             "d e";
          grid-template-columns: 1fr 1fr;
          gap: 20px;
+         @include max-media("phone") {
+            grid-template-areas:
+               "a"
+               "b"
+               "c"
+               "d"
+               "e";
+            grid-template-columns: 1fr;
+         }
          input {
             margin-bottom: 0;
             &:nth-child(1) {

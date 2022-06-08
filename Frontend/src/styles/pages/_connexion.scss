@@ -6,6 +6,10 @@
    padding: 30px;
    width: 100%;
    height: 100vh;
+   @include max-media("tablet") {
+      height: auto;
+      flex-direction: column;
+   }
    &__logo {
       display: flex;
       align-items: center;
@@ -15,6 +19,11 @@
       width: 60%;
       min-width: 400px;
       padding: 10% 0 10% 0;
+      @include max-media("tablet") {
+         height: 110px;
+         width: 100%;
+         padding: 0;
+      }
       img {
          width: 100%;
       }
@@ -24,5 +33,8 @@
       align-items: center;
       max-width: 500px;
       width: 100%;
+      @include max-media("tablet") {
+         max-width: none;
+      }
    }
 }
