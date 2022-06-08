@@ -17,7 +17,6 @@ exports.createComment = async (req, res, next) => {
       const { postId } = req.params;
       const content = req.body.content;
       const date = Date.now();
-      console.log(content);
       await pool.query(
          "INSERT INTO comments (owner_id, post_id, content, date) VALUES ($1, $2, $3, $4)",
          [ownerId, postId, content, date]
@@ -40,7 +39,6 @@ exports.modifyComment = async (req, res, next) => {
          ownerId,
       ])
       .then((comment) => {
-         console.log(comment.rows[0]);
          if (!comment.rows[0]) {
             return res.status(404).json({
                error: "Commentaire non trouvé !",

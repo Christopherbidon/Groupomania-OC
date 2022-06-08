@@ -16,6 +16,13 @@ const ChangePassword = ({ user, functionNewPopup }) => {
          );
          return;
       }
+      if (newPassword === oldPassword) {
+         functionNewPopup(
+            "Votre nouveau mot de passe est identique à l'ancien",
+            "error"
+         );
+         return;
+      }
       console.log(user);
       axios
          .put("http://localhost:4000/users/modifyPassword", data, {

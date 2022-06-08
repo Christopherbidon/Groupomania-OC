@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -14,6 +14,7 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
    const [ownerData, setOwnerData] = useState("");
    const [postImage, setPostImage] = useState(post.image_url);
    const [selectedImage, setSelectedImage] = useState(null);
+   const postRef = useRef();
 
    /***********************************************************/
    /* Permet de récupérer les données su propriétaire du post */
@@ -153,6 +154,16 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
          }
       }
    };
+
+   const sizeTextArea = () => {
+      let height = parseInt(postRef.current.clientHeight) + 2;
+      let width = parseInt(postRef.current.clientWidth) + 2;
+      return {
+         height: height + "px",
+         width: width + "px",
+      };
+   };
+
    return (
       <>
          <li className="post">
@@ -213,14 +224,21 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
             </div>
             {!onUpdatePost ? (
                <div className="post__content">
-                  <p className="post__text">{newContent}</p>
+                  <p ref={postRef} className="post__text">
+                     {newContent}
+                  </p>
                </div>
             ) : (
                <div className="post__content">
                   <textarea
+                     style={sizeTextArea()}
+                     ref={postRef}
                      value={newContent}
                      className="post__text post__text__update"
-                     onChange={(e) => setNewContent(e.target.value)}
+                     onChange={(e) => {
+                        setNewContent(e.target.value);
+                        console.log(sizeTextArea());
+                     }}
                      autoFocus
                   ></textarea>
                </div>

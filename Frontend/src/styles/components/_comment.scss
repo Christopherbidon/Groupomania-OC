@@ -33,6 +33,7 @@
       line-height: 18px;
       color: $primaryTextColor;
       resize: none;
+      word-wrap: break-word;
       &:focus-visible {
          outline: none;
       }

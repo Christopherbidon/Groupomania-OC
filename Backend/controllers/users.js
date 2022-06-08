@@ -9,7 +9,6 @@ exports.getUser = (req, res, next) => {
    pool
       .query("SELECT * FROM users WHERE user_id = $1", [id])
       .then((data) => {
-         console.log(data);
          const exportsData = {
             name: data.rows[0].name,
             firstname: data.rows[0].firstname,

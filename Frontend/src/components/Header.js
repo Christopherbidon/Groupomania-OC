@@ -13,6 +13,7 @@ const Header = ({ functionUpdateDataUser, user, functionNewPopup }) => {
 
    const handleClickProfile = () => {
       popupProfile ? setPopupProfile(false) : setPopupProfile(true);
+      setHamburgerMenu(false);
    };
 
    const hamburgerMenuClick = () => {

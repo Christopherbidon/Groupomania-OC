@@ -49,6 +49,7 @@
       border-radius: 3px;
       width: 100%;
       color: $primaryTextColor;
+      word-wrap: break-word;
       &__update {
          background-color: $secondaryBackgroundColor;
          padding: 5px 10px;

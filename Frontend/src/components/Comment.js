@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Comment = ({
    comment,
@@ -11,6 +11,7 @@ const Comment = ({
    const [isActive, setIsActive] = useState(false);
    const [onUpdateComment, setOnUpdateComment] = useState(false);
    const [commentContent, setCommentContent] = useState(comment.content);
+   const commentRef = useRef();
 
    useEffect(() => {
       axios
@@ -61,11 +62,19 @@ const Comment = ({
                functionNewPopup(res.data.message, "valid");
                setOnUpdateComment(false);
                setIsActive(false);
+               comment.content = commentContent;
             })
             .catch((err) => {
                console.log(err);
             });
       }
+   };
+
+   const sizeTextArea = () => {
+      return {
+         height: commentRef.current.clientHeight + "px",
+         width: commentRef.current.clientWidth + "px",
+      };
    };
 
    return (
@@ -75,6 +84,8 @@ const Comment = ({
          </div>
          {onUpdateComment ? (
             <textarea
+               ref={commentRef}
+               style={sizeTextArea()}
                onChange={(e) => setCommentContent(e.target.value)}
                className={
                   isActive
@@ -85,6 +96,7 @@ const Comment = ({
             ></textarea>
          ) : (
             <p
+               ref={commentRef}
                className={
                   isActive
                      ? "comment__content comment__content__activeEdit"
