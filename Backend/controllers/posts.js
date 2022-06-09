@@ -45,7 +45,6 @@ exports.modifyPost = async (req, res, next) => {
       .query("SELECT * FROM posts WHERE post_id = $1", [postId])
       .then((post) => {
          const oldImageUrl = post.rows[0].image_url;
-         console.log(oldImageUrl);
          if (oldImageUrl != null) {
             if (req.file || req.body.imageUrl == null) {
                fs.unlink(
@@ -109,7 +108,7 @@ exports.deletePost = async (req, res, next) => {
                   if (err) console.log(err);
                });
             }
-            if (post.rows[0].likes != 0) {
+            if (post.rows[0].likes != 0 || post.rows[0].dislikes != 0) {
                pool.query("DELETE FROM likes WHERE post_id = $1", [id]);
             }
             pool.query("DELETE FROM comments WHERE post_id = $1", [id]);

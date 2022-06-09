@@ -21,8 +21,6 @@ app.use((req, res, next) => {
    next();
 });
 
-app.use("/config", express.static(path.join(__dirname, "config")));
-
 app.use("/medias", express.static(path.join(__dirname, "medias")));
 
 app.use("/posts", postRoutes);

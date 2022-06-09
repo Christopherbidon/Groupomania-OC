@@ -63,6 +63,7 @@ const Comment = ({
                setOnUpdateComment(false);
                setIsActive(false);
                comment.content = commentContent;
+               console.log(comment.comment_id);
             })
             .catch((err) => {
                console.log(err);

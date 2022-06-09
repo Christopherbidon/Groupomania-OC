@@ -66,7 +66,7 @@ exports.modifyComment = async (req, res, next) => {
                })
             );
       })
-      .catch((err) => console.log("coucou" + err));
+      .catch((err) => console.log(err));
 };
 
 exports.deleteComment = async (req, res, next) => {
