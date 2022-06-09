@@ -50,20 +50,20 @@ const Profile = ({
                onClick={() => functionHandleClickProfile()}
             ></div>
          </div>
-         <div className="avatarContainer">
-            <img
-               src={
-                  selectedImage
-                     ? window.URL.createObjectURL(selectedImage)
-                     : avatar
-               }
-               alt="Photo de profil"
-            />
-            {selectedImage ? null : (
-               <>
-                  <div className="avatarModifier avatarModifier__edit">
-                     <FontAwesomeIcon icon="fa-solid fa-pencil" />
-                  </div>
+         <div className="changeAvatar">
+            <div className="avatarContainer">
+               <img
+                  src={
+                     selectedImage
+                        ? window.URL.createObjectURL(selectedImage)
+                        : avatar
+                  }
+                  alt="Avatar de profil"
+               />
+            </div>
+            <div className="containerButtonAvatarChange">
+               <button className="buttonAvatar buttonAvatar__edit">
+                  <FontAwesomeIcon icon="fa-solid fa-pencil" />
                   <input
                      type="file"
                      id="image"
@@ -71,21 +71,27 @@ const Profile = ({
                      accept=".jpg,.jpeg,.png,.gif"
                      onChange={(e) => setSelectedImage(e.target.files[0])}
                   />
-               </>
-            )}
-         </div>
-         {selectedImage ? (
-            <div className="buttonAvatarChange">
-               <button onClick={(e) => handleUpdate(e)}>Valider</button>
-               <button
-                  onClick={() => {
-                     setSelectedImage(null);
-                  }}
-               >
-                  Annuler
                </button>
+               {selectedImage ? (
+                  <>
+                     <button
+                        className="buttonAvatar buttonAvatar__valid"
+                        onClick={(e) => handleUpdate(e)}
+                     >
+                        Valider
+                     </button>
+                     <button
+                        className="buttonAvatar buttonAvatar__cancel"
+                        onClick={() => {
+                           setSelectedImage(null);
+                        }}
+                     >
+                        Annuler
+                     </button>
+                  </>
+               ) : null}
             </div>
-         ) : null}
+         </div>
          <ChangeIdentity user={user} functionNewPopup={functionNewPopup} />
          <ChangePassword user={user} functionNewPopup={functionNewPopup} />
       </div>
