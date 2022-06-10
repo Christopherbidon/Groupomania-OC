@@ -1,10 +1,10 @@
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import LikesBar from "./LikesBar";
 import AllComments from "./AllComments";
+import LikesBar from "./LikesBar";
 
 library.add(fas);
 
@@ -15,6 +15,31 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
    const [postImage, setPostImage] = useState(post.image_url);
    const [selectedImage, setSelectedImage] = useState(null);
    const postRef = useRef();
+   const date = new Date(parseInt(post.date)).toLocaleDateString("fr-FR", {
+      /*weekday: "long",*/
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      /*hour: "numeric",
+      minute: "numeric",*/
+   });
+
+   const getDate = () => {
+      const dateNow = Date.now();
+      const ecard = Math.floor((dateNow - post.date) / 1000);
+      console.log(dateNow, ecard, post.date);
+      if (ecard < 60) {
+         return ecard + " s";
+      } else if (ecard > 60 && ecard < 3600) {
+         return Math.floor(ecard / 60) + " m";
+      } else if (ecard > 3600 && ecard < 86400) {
+         return Math.floor(ecard / 60 / 60) + " h";
+      } else if (ecard > 86400 && ecard < 1296000) {
+         return Math.floor(ecard / 60 / 60 / 24) + " j";
+      } else {
+         return date;
+      }
+   };
 
    /***********************************************************/
    /* Permet de récupérer les données su propriétaire du post */
@@ -27,6 +52,7 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
             },
          })
          .then((res) => setOwnerData(res.data));
+      console.log(date);
    }, []);
 
    /****************************************/
@@ -184,7 +210,8 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
                         ownerData.firstname +
                         " " +
                         ownerData.name +
-                        "."}
+                        " • " +
+                        getDate()}
                   </p>
                </div>
                {post.owner_id == user.userId || user.admin ? (

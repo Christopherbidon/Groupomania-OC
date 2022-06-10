@@ -70,6 +70,7 @@
       line-height: 25px;
    }
    &__avatar {
+      @include flexcenter;
       background-color: $tertiaryBackgroundColor;
       width: 25px;
       height: 25px;
