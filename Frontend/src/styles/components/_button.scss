@@ -54,3 +54,19 @@ input[type="submit"] {
       color: black;
    }
 }
+
+.deleteAccount {
+   height: 32px;
+   padding: 5px 20px;
+   margin-top: 10px;
+   background-color: $deleteColor;
+   border: none;
+   border-radius: 2px;
+   font-weight: bold;
+   color: $primaryTextColor;
+   cursor: pointer;
+   &:hover {
+      background-color: lighten($deleteColor, 10);
+      color: black;
+   }
+}

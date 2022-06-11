@@ -40,6 +40,19 @@ const Profile = ({
          });
    };
 
+   const handleDeleteAccount = async (e) => {
+      e.preventDefault();
+      await axios
+         .delete(`http://localhost:4000/users/delete`, {
+            headers: { Authorization: `beared ${user.token}` },
+         })
+         .then((res) => {
+            sessionStorage.removeItem("user");
+            functionNewPopup(res.data.message, "valid");
+            functionUpdateDataUser();
+         });
+   };
+
    return (
       <div className="popupProfile">
          <div className="popupProfileContainer">
@@ -94,6 +107,12 @@ const Profile = ({
          </div>
          <ChangeIdentity user={user} functionNewPopup={functionNewPopup} />
          <ChangePassword user={user} functionNewPopup={functionNewPopup} />
+         <button
+            onClick={(e) => handleDeleteAccount(e)}
+            className="deleteAccount"
+         >
+            Supprimer compte
+         </button>
       </div>
    );
 };

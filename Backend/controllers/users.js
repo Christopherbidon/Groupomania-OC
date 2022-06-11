@@ -169,9 +169,66 @@ exports.deleteUser = async (req, res, next) => {
                if (err) console.log(err);
             });
          }
-         pool
-            .query("DELETE FROM users WHERE user_id = $1", [userId])
-            .then(() => res.status(200).json("Utilisateur supprimer !"))
-            .catch((err) => res.status(500).json({ err }));
+         try {
+            pool
+               .query("SELECT * FROM likes WHERE owner_id = $1", [userId])
+               .then((likes) => {
+                  if (likes.rows.length > 0) {
+                     likes.rows.forEach((like) => {
+                        pool.query(
+                           "DELETE FROM likes WHERE (owner_id = $1) AND (post_id = $2)",
+                           [userId, like.post_id]
+                        );
+                        if (like.like_value === true) {
+                           pool.query(
+                              "UPDATE posts set likes = likes - 1 WHERE post_id = $1",
+                              [like.post_id]
+                           );
+                        } else {
+                           pool.query(
+                              "UPDATE posts set dislikes = dislikes - 1 WHERE post_id = $1",
+                              [like.post_id]
+                           );
+                        }
+                     });
+                  }
+               });
+            pool.query("DELETE FROM comments WHERE owner_id = $1", [userId]);
+            pool
+               .query("SELECT * FROM posts WHERE owner_id = $1", [userId])
+               .then((posts) => {
+                  if (posts.rows.length > 0) {
+                     posts.rows.forEach((post) => {
+                        const postId = post.post_id;
+                        const imageUrl = post.image_url;
+                        if (imageUrl != null) {
+                           fs.unlink(
+                              `medias/${imageUrl.split("/medias/")[1]}`,
+                              (err) => {
+                                 if (err) console.log(err);
+                              }
+                           );
+                        }
+                        if (post.likes != 0 || post.dislikes != 0) {
+                           pool.query("DELETE FROM likes WHERE post_id = $1", [
+                              postId,
+                           ]);
+                        }
+                        pool.query("DELETE FROM comments WHERE post_id = $1", [
+                           postId,
+                        ]);
+                        pool.query("DELETE FROM posts WHERE post_id = $1", [
+                           postId,
+                        ]);
+                        console.log("post Supprimer");
+                     });
+                  }
+               });
+         } catch (error) {
+            res.status(500).json({ error });
+         }
       });
+   pool.query("DELETE FROM users WHERE user_id = $1", [userId]).then(() => {
+      res.status(200).json({ message: "Utilisateur supprimé avec succès" });
+   });
 };

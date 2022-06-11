@@ -8,7 +8,7 @@ const Header = ({ functionUpdateDataUser, user, functionNewPopup }) => {
 
    const handleLogout = () => {
       sessionStorage.removeItem("user");
-      window.location.reload();
+      functionUpdateDataUser();
    };
 
    const handleClickProfile = () => {

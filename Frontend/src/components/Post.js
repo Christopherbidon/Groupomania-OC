@@ -16,18 +16,14 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
    const [selectedImage, setSelectedImage] = useState(null);
    const postRef = useRef();
    const date = new Date(parseInt(post.date)).toLocaleDateString("fr-FR", {
-      /*weekday: "long",*/
       year: "numeric",
       month: "short",
       day: "numeric",
-      /*hour: "numeric",
-      minute: "numeric",*/
    });
 
    const getDate = () => {
       const dateNow = Date.now();
       const ecard = Math.floor((dateNow - post.date) / 1000);
-      console.log(dateNow, ecard, post.date);
       if (ecard < 60) {
          return ecard + " s";
       } else if (ecard > 60 && ecard < 3600) {
@@ -52,7 +48,6 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
             },
          })
          .then((res) => setOwnerData(res.data));
-      console.log(date);
    }, []);
 
    /****************************************/
