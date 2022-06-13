@@ -14,6 +14,13 @@
 		avatar_url VARCHAR(255) DEFAULT 'http://localhost:4000/config/defaultMedia/defaultAvatar',
 		admin BOOLEAN DEFAULT FALSE
 	);
+
+	-- Création du compte admin
+
+
+	INSERT INTO users (email, password, name, firstname,  admin)
+	VALUES('admin@gmail.com', '$2b$10$AtRTvx7VoEOjjEn/4c7kVusJD8BA.NXWeV5NiKCQ5hvr8y7Ah8OIC', 'admin', 'admin', true)
+	
 	
 	-- Création de la table posts
 	
