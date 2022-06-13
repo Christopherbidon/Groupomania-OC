@@ -220,15 +220,19 @@ exports.deleteUser = async (req, res, next) => {
                         pool.query("DELETE FROM posts WHERE post_id = $1", [
                            postId,
                         ]);
-                        console.log("post Supprimer");
                      });
                   }
+               });
+            pool.query("DELETE FROM posts WHERE owner_id = $1", [userId]);
+            pool
+               .query("DELETE FROM users WHERE user_id = $1", [userId])
+               .then(() => {
+                  res.status(200).json({
+                     message: "Utilisateur supprimé avec succès",
+                  });
                });
          } catch (error) {
             res.status(500).json({ error });
          }
       });
-   pool.query("DELETE FROM users WHERE user_id = $1", [userId]).then(() => {
-      res.status(200).json({ message: "Utilisateur supprimé avec succès" });
-   });
 };
