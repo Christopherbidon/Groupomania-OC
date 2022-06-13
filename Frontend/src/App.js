@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Blog from "./components/Blog";
 import Connexion from "./components/Connexion";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import Popup from "./components/Popup";
 
 const App = () => {
-   const [user, setUser] = useState(null);
+   const [user, setUser] = useState("");
    const [messagePopup, setMessagePopup] = useState("");
    const [valuePopup, setValuePopup] = useState("");
    const [popup, setPopup] = useState(false);
@@ -34,7 +36,14 @@ const App = () => {
    return (
       <>
          {popup ? <Popup value={valuePopup} popupText={messagePopup} /> : null}
-         <div className="main">
+         {user ? (
+            <Header
+               functionUpdateDataUser={getDataUser}
+               user={user}
+               functionNewPopup={newPopup}
+            />
+         ) : null}
+         <main className="main">
             {user ? (
                <Blog
                   functionUpdateDataUser={getDataUser}
@@ -47,7 +56,8 @@ const App = () => {
                   functionNewPopup={newPopup}
                />
             )}
-         </div>
+         </main>
+         <Footer />
       </>
    );
 };

@@ -27,11 +27,6 @@ const Blog = ({ functionUpdateDataUser, functionNewPopup, user }) => {
 
    return (
       <>
-         <Header
-            functionUpdateDataUser={functionUpdateDataUser}
-            user={user}
-            functionNewPopup={functionNewPopup}
-         />
          <InputPost
             user={user}
             functionGetData={getData}

@@ -1,0 +1,14 @@
+footer {
+   @include flexcenter;
+   height: 80px;
+   width: 100%;
+   margin-top: 20px;
+   background-color: $secondaryBackgroundColor;
+   @include max-media("tablet") {
+      margin-top: 10px;
+   }
+   .copyright {
+      color: $secondaryTextColor;
+      font-weight: 500;
+   }
+}
