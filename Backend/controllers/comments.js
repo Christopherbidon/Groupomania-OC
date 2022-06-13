@@ -1,5 +1,7 @@
 const pool = require("../config/db-config");
 
+/* Controlleur qui permet de récupérer tous les commentaires */
+
 exports.getAllComments = async (req, res, next) => {
    const { postId } = req.params;
 
@@ -10,6 +12,8 @@ exports.getAllComments = async (req, res, next) => {
       })
       .catch((err) => console.log(err));
 };
+
+/* Controlleur qui permet de créer un commentaire */
 
 exports.createComment = async (req, res, next) => {
    try {
@@ -28,6 +32,8 @@ exports.createComment = async (req, res, next) => {
       });
    }
 };
+
+/* Controlleur qui permet de modifier un commentaire */
 
 exports.modifyComment = async (req, res, next) => {
    const commentId = req.params.commentId;
@@ -68,6 +74,8 @@ exports.modifyComment = async (req, res, next) => {
       })
       .catch((err) => console.log(err));
 };
+
+/* Controlleur qui permet de supprimer un commentaire */
 
 exports.deleteComment = async (req, res, next) => {
    const { commentId } = req.params;

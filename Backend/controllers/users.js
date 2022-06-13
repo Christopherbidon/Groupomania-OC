@@ -1,9 +1,14 @@
+/* Package qui permet de crypter le mot de passe */
 const bcrypt = require("bcrypt");
+/* package qui permet de créer un token et de le décoder */
 const jwt = require("jsonwebtoken");
+/* récupération de la config de la base de donnée */
 const pool = require("../config/db-config");
+/* Package pour la gestion de fichier */
 const fs = require("fs");
 
 /* Controleur pour récupérer un utilisateur */
+
 exports.getUser = (req, res, next) => {
    const { id } = req.params;
    pool
@@ -18,7 +23,9 @@ exports.getUser = (req, res, next) => {
       })
       .catch((err) => res.status(400).json({ err }));
 };
+
 /* Controleur pour l'inscription d'une personne */
+
 exports.signupUser = (req, res, next) => {
    bcrypt
       .hash(req.body.password, 10)
@@ -38,6 +45,7 @@ exports.signupUser = (req, res, next) => {
 };
 
 /* Controlleur pour la connexion d'une personne */
+
 exports.loginUser = (req, res, next) => {
    const { email } = req.body;
    pool
@@ -72,6 +80,8 @@ exports.loginUser = (req, res, next) => {
       })
       .catch((err) => res.status(500).json({ err }));
 };
+
+/* Controlleur pour modifier le mot de passe d'un utilisateur */
 
 exports.modifyUserPassword = (req, res, next) => {
    const userId = req.auth.userId;
@@ -109,6 +119,8 @@ exports.modifyUserPassword = (req, res, next) => {
       .catch((err) => res.status(500).json({ err }));
 };
 
+/* Controlleur pour modifier l'avatar d'un utilisateur */
+
 exports.modifyUserAvatar = async (req, res, next) => {
    const userId = req.auth.userId;
    const avatar_url = req.file
@@ -138,6 +150,8 @@ exports.modifyUserAvatar = async (req, res, next) => {
       });
 };
 
+/* Controlleur pour modifier le nom et prénom d'un utilisateur */
+
 exports.modifyIdentity = async (req, res, next) => {
    const userId = req.auth.userId;
    const newName = req.body.name;
@@ -156,6 +170,8 @@ exports.modifyIdentity = async (req, res, next) => {
       )
       .catch((err) => res.status(500).json({ err }));
 };
+
+/* Controlleur pour supprimer un utilisateur */
 
 exports.deleteUser = async (req, res, next) => {
    const userId = req.auth.userId;

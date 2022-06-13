@@ -1,5 +1,9 @@
+/* Récupération de la config de la base de donnée */
 const pool = require("../config/db-config");
+/* Package qui permet de gérer les fichier */
 const fs = require("fs");
+
+/* Controlleur qui permet de créer un post */
 
 exports.createPost = async (req, res, next) => {
    try {
@@ -19,12 +23,16 @@ exports.createPost = async (req, res, next) => {
    }
 };
 
+/* Controlleur qui permet de récupérer tous les posts */
+
 exports.getAllPosts = async (req, res, next) => {
    await pool
       .query("SELECT * FROM posts")
       .then((posts) => res.status(200).json(posts.rows))
       .catch((err) => res.status(400).json(err));
 };
+
+/* Controlleur qui permet de récupérer un post */
 
 exports.getOnePost = async (req, res, next) => {
    const { id } = req.params;
@@ -33,6 +41,8 @@ exports.getOnePost = async (req, res, next) => {
       .then((post) => res.status(200).json(post.rows))
       .catch((err) => res.status(404).json({ err }));
 };
+
+/* Controlleur qui permet de modifier un post */
 
 exports.modifyPost = async (req, res, next) => {
    const postId = req.params.id;
@@ -80,6 +90,8 @@ exports.modifyPost = async (req, res, next) => {
       })
       .catch((err) => console.log(err));
 };
+
+/* Controlleur qui permet de supprimer un post */
 
 exports.deletePost = async (req, res, next) => {
    const { id } = req.params;

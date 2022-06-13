@@ -5,7 +5,6 @@ const auth = require("../middleware/auth");
 
 /* Route pour récupérer les likes */
 router.get("/:idPost", auth, likeCtrl.getLike);
-
 /* Route pour inscrire un utilisateur */
 router.post("/:idPost/like", auth, likeCtrl.addLike);
 /* Route pour supprimer un utilisateur */

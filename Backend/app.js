@@ -21,14 +21,19 @@ app.use((req, res, next) => {
    next();
 });
 
+/* Url media qui envoie vers le bon dossier nomé medias*/
 app.use("/medias", express.static(path.join(__dirname, "medias")));
 
+/* Url posts qui envoie vers la routes posts.js*/
 app.use("/posts", postRoutes);
 
+/* Url users qui envoie vers la routes users.js*/
 app.use("/users", userRoutes);
 
+/* Url likes qui envoie vers la routes likes.js*/
 app.use("/likes", likeRoutes);
 
+/* Url comments qui envoie vers la routes comments.js*/
 app.use("/comments", commentRoutes);
 
 module.exports = app;

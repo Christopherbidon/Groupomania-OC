@@ -1,5 +1,7 @@
 const pool = require("../config/db-config");
 
+/* Controlleur qui permet de récupérer le like d'un utilisateur */
+
 exports.getLike = async (req, res, next) => {
    const { userId } = req.auth;
    const postId = req.params.idPost;
@@ -18,6 +20,8 @@ exports.getLike = async (req, res, next) => {
       })
       .catch((err) => console.log(err));
 };
+
+/* Controlleur qui permet de liker */
 
 exports.addLike = async (req, res, next) => {
    const { userId } = req.auth;
@@ -70,6 +74,8 @@ exports.addLike = async (req, res, next) => {
       .catch((err) => console.log(err));
 };
 
+/* Controlleur qui permet de disliker */
+
 exports.addDislike = async (req, res, next) => {
    const { userId } = req.auth;
    const postId = req.params.idPost;
@@ -121,6 +127,8 @@ exports.addDislike = async (req, res, next) => {
       })
       .catch((err) => console.log(err));
 };
+
+/* Controlleur qui permet supprimer un like ou un dislike */
 
 exports.deleteLike = async (req, res, next) => {
    const { userId } = req.auth;
