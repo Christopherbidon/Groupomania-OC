@@ -8,7 +8,7 @@ Bonjour et bienvenu sur l'installation du backend de mon projet groupomania.
 
 4°) Lors de l'installation de votre base de donnée nommé la 'groupomania'
 
-5°) Vous avez un fichier "database.sql" contenant tous le script nécéssaire pour créer la base de donnée avec toute les bonnes tables. Exécuter le afin que votre base de donnée soit fonctionnel.
+5°) Vous avez un fichier "database.sql" ou dans les livrable un autre fichier contenant tous le script nécéssaire pour créer la base de donnée avec toute les bonnes tables. Exécuter le afin que votre base de donnée soit fonctionnel.
 
 6°) Dans le fichier ".env(exemple)" supprimer le "(exemple)" dans le nom du fichier, puis remplisser les informations qui vous correspondent concernant la base de donnée postgresql. 
    6.1°) Vous devez remplacer les éléments du fichier par vos éléments et configurations.
