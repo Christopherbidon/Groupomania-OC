@@ -9,6 +9,7 @@ library.add(fas);
 const InputPost = ({ user, functionGetData, functionNewPopup }) => {
    const [selectedImage, setSelectedImage] = useState(null);
    const [content, setContent] = useState("");
+   const [isActive, setIsActive] = useState(false);
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -29,6 +30,7 @@ const InputPost = ({ user, functionGetData, functionNewPopup }) => {
                   functionNewPopup(res.data.message, "valid");
                }
                functionGetData();
+               setIsActive(false);
             })
             .catch((err) => {
                console.log(err);
@@ -40,56 +42,75 @@ const InputPost = ({ user, functionGetData, functionNewPopup }) => {
       setSelectedImage(null);
    };
    return (
-      <div className="containerInputPost">
-         <form
-            className="containerInputPost__form"
-            onSubmit={(e) => handleSubmit(e)}
+      <>
+         {isActive ? (
+            <div
+               className="backgroundInputPost"
+               onClick={() => setIsActive(false)}
+            ></div>
+         ) : null}
+         <div
+            className={
+               isActive
+                  ? "containerInputPost containerInputPost--active"
+                  : "containerInputPost"
+            }
+            onClick={() => setIsActive(true)}
          >
-            <textarea
-               className="containerInputPost__text"
-               placeholder="Tapez votre message ici !"
-               value={content}
-               onChange={(e) => setContent(e.target.value)}
-            ></textarea>
-            <div className="preview">
-               <div className="containerInputFile">
-                  <button className="btnUploadFile">
-                     {selectedImage ? (
-                        <FontAwesomeIcon icon="fa-solid fa-pencil" />
-                     ) : (
-                        <FontAwesomeIcon icon="fa-solid fa-plus" />
-                     )}
-                  </button>
-                  <input
-                     type="file"
-                     id="image"
-                     name="image"
-                     accept=".jpg,.jpeg,.png,.gif"
-                     onChange={(e) => setSelectedImage(e.target.files[0])}
-                  />
-               </div>
-               {selectedImage ? (
-                  <>
-                     <img
-                        src={window.URL.createObjectURL(selectedImage)}
-                        alt="Fichier sélectionner"
+            <form
+               className={
+                  isActive
+                     ? "containerInputPost__form containerInputPost__form--active"
+                     : "containerInputPost__form"
+               }
+               onSubmit={(e) => handleSubmit(e)}
+            >
+               <textarea
+                  className="containerInputPost__text"
+                  placeholder="Tapez votre message ici !"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+               ></textarea>
+               <div className="preview">
+                  <div className="containerInputFile">
+                     <button className="btnUploadFile">
+                        {selectedImage ? (
+                           <FontAwesomeIcon icon="fa-solid fa-pencil" />
+                        ) : (
+                           <FontAwesomeIcon icon="fa-solid fa-plus" />
+                        )}
+                     </button>
+                     <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept=".jpg,.jpeg,.png,.gif"
+                        onChange={(e) => setSelectedImage(e.target.files[0])}
                      />
-                     <div
-                        className="deleteImage"
-                        onClick={() => handleResetImage()}
-                     >
-                        <FontAwesomeIcon icon="xmark" />
-                     </div>
-                  </>
-               ) : null}
-            </div>
-            <input
-               className="containerInputPost__buttonSubmit"
-               type="submit"
-               value="Envoyer"
-            />
-         </form>
-      </div>
+                  </div>
+                  {selectedImage ? (
+                     <>
+                        <img
+                           src={window.URL.createObjectURL(selectedImage)}
+                           alt="Fichier sélectionner"
+                        />
+                        <div
+                           className="deleteImage"
+                           onClick={() => handleResetImage()}
+                        >
+                           <FontAwesomeIcon icon="xmark" />
+                        </div>
+                     </>
+                  ) : null}
+               </div>
+               <input
+                  className="containerInputPost__buttonSubmit"
+                  type="submit"
+                  value="Envoyer"
+               />
+            </form>
+         </div>
+      </>
    );
 };
 

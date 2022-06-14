@@ -104,6 +104,7 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
          })
          .then((res) => {
             if (res.status == 200) {
+               functionGetData();
                window.location.reload();
             }
          })
@@ -259,7 +260,6 @@ const Post = ({ post, user, functionGetData, functionNewPopup }) => {
                      className="post__text post__text__update"
                      onChange={(e) => {
                         setNewContent(e.target.value);
-                        console.log(sizeTextArea());
                      }}
                      autoFocus
                   ></textarea>

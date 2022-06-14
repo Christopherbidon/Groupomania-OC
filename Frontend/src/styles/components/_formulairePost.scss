@@ -1,3 +1,12 @@
+.backgroundInputPost {
+   position: absolute;
+   height: 100vh;
+   width: 100%;
+   z-index: 10;
+   background-color: black;
+   opacity: 0.5;
+}
+
 .containerInputPost {
    display: flex;
    position: relative;
@@ -6,6 +15,18 @@
    max-width: 1000px;
    border-radius: 5px;
    background-color: $secondaryBackgroundColor;
+   &--active {
+      z-index: 15;
+      .containerInputPost__form--active {
+         textarea {
+            animation: textareaGrow 0.5s ease-in-out;
+            padding-top: 5px;
+            outline: none;
+            height: 120px;
+            line-height: 30px;
+         }
+      }
+   }
    @include max-media("tablet") {
       width: 100%;
       border-radius: 0;
